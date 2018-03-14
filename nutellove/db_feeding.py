@@ -97,16 +97,20 @@ class DBFeed():
         """
         Fills Categories table with specified categories column
         """
+        print("Feeding categories...")
         cat_dict = csv_to_dict(self.file_name, self.headers)
 
         for category in cat_dict:
             Category.objects.get_or_create(name=category[categories_col])
+
+        print("Categories fed")
 
     def fill_stores(self, stores_col):
         """
         Fills stores table with specified stores (stores_col).
         Fills the table with unique values.
         """
+        print("Feeding stores...")
         dataframe = csv_to_df(self.file_name, self.headers)
         stores_list = get_unique_df_values(dataframe, stores_col)
 
@@ -124,12 +128,15 @@ class DBFeed():
         for store in stores_set:
             Store.objects.get_or_create(name=store)
 
+        print("Stores fed")
+
     def fill_brands(self, brands_col):
         """
         Fills brands table with specified brands (brands_col).
         Fills the table with unique values.
         """
 
+        print("Feeding brands...")
         dataframe = csv_to_df(self.file_name, self.headers)
         brands_list = get_unique_df_values(dataframe, brands_col)
 
@@ -147,11 +154,14 @@ class DBFeed():
         for brand in brands_set:
             Brand.objects.get_or_create(name=brand)
 
+        print("Brands fed")
+
     def fill_products(self):
         """
         Fills Products table with specified
         """
 
+        print("Feeding products...")
         products_dict = csv_to_dict(self.file_name, self.headers)
 
         for product in products_dict:
@@ -170,8 +180,10 @@ class DBFeed():
                 fibers=product["fiber_100g"],
                 proteins=product["proteins_100g"],
                 salt=product["salt_100g"],
-                last_modified_t=datetime.datetime.fromtimestamp(product["last_modified_t"]),
+                last_modified_t=django.utils.timezone.make_aware(datetime.datetime.fromtimestamp(product["last_modified_t"])),
             )
+
+        print("Products fed")
 
         self.fill_productsbrands(products_dict)
         self.fill_productsstores(products_dict)
@@ -181,6 +193,8 @@ class DBFeed():
         # for each dict if the brands value is not None,
         # for each brand, get or create the productsbrands table
         # based on brand name and product name of each dict.
+
+        print("Feeding productbrand...")
         for dic in products_dict:
             if dic["brands"] is not None:
                 for brand in dic["brands"]:
@@ -194,17 +208,21 @@ class DBFeed():
                         ),
                         # select product.id
                         # from Products table
-                        # where products.name = dic["product_name"]
+                        # where products.name = dic["url"]
                         product=Product.objects.get(
-                            name=dic["product_name"]
+                            url=dic["url"]
                         )
                     )
+
+        print("productbrand fed")
 
     def fill_productsstores(self, products_dict):
         # this loop gets all dicts in the products_dict list.
         # for each dict if the brands value is not None,
         # for each store, get or create the productsstores table
         # based on store name and product name of each dict.
+
+        print("Feeding productstore...")
         for dic in products_dict:
             if dic["stores"] is not None:
                 for store in dic["stores"]:
@@ -218,11 +236,13 @@ class DBFeed():
                         ),
                         # select products.id
                         # from Products table
-                        # where products.name = dic["product_name"]
+                        # where products.name = dic["url"]
                         product=Product.objects.get(
-                            name=dic["product_name"]
+                            url=dic["url"]
                         )
                     )
+
+        print("Productstore fed")
 
     def delete_productsstores(self, products_dict):
         for t in Productstore.objects.select():
