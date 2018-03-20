@@ -17,12 +17,14 @@ from django.conf import settings
 from django.conf.urls import include, url
 from django.contrib import admin
 from django.urls import path
-from store import views
-
+from products import views
 
 urlpatterns = [
     path('', views.index),  # index view, homepage
-    path('store/', include('store.urls')),
+    path('products/', include('products.urls', namespace="products")),
+    path('brands/', include('products.urls', namespace="")),
+    path('stores/', include('products.urls', namespace="")),
+    path('legals/', views.legals),
     path('admin/', admin.site.urls),
 ]
 

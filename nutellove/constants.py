@@ -24,6 +24,8 @@ HEADERS_LIST = [
     "fiber_100g",
     "proteins_100g",
     "salt_100g",
+    "image_url",
+    "image_small_url",
     "last_modified_t",
 ]
 

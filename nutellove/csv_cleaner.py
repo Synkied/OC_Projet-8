@@ -53,7 +53,7 @@ class CSVCleaner():
 
         # save the new file to a csv file, with the name "db_file.csv"
         new_f.to_csv(
-            "../db_file.csv",
+            "db_file.csv",
             index=False,
             encoding="utf-8",
             sep=";",
@@ -62,6 +62,6 @@ class CSVCleaner():
 
 if __name__ == "__main__":
 
-    new_csv = CSVCleaner("../fr.openfoodfacts.org.products.csv")
+    new_csv = CSVCleaner("fr.openfoodfacts.org.products.csv")
 
     new_csv.csv_cleaner(HEADERS_LIST, CATEGORIES_LIST, COUNTRIES_LIST)

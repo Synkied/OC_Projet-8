@@ -51,6 +51,13 @@ or (Unix only)
 make init
 ```
 
+## Creating and feeding db
+```sh
+make create_db u={your postgresql username} n={the dbname you want to use}
+make migrate_db
+make feed_db
+```
+
 # Running the app
 
 # Known issues
