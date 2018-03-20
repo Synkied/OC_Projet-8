@@ -3,7 +3,7 @@
 <!-- Navigation -->
 <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
   <div class="container">
-    <a class="navbar-brand js-scroll-trigger" href="#page-top"><img class="mr-2 align-top" height="30px" src="{% static 'products/img/logo_pur_beurre.svg' %}" alt="">Pur beurre</a>
+    <a class="navbar-brand js-scroll-trigger" href="{% url 'index' %}"><img class="mr-2 align-top" height="30px" src="{% static 'img/logo_pur_beurre.svg' %}" alt="">Pur beurre</a>
     <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -13,7 +13,7 @@
           <a class="nav-link js-scroll-trigger" href="compte"><i class="fa fa-2x fa-user text-primary mb-3 sr-icons"></i></a>
         </li>
         <li class="nav-item">
-          <a class="nav-link js-scroll-trigger" href="aliments"><img height="35px" src="{% static 'products/img/carrot.svg' %}" alt="Mes aliments"></a>
+          <a class="nav-link js-scroll-trigger" href="aliments"><img height="35px" src="{% static 'img/carrot.svg' %}" alt="Mes aliments"></a>
         </li>
         <li class="nav-item">
           <a class="nav-link js-scroll-trigger" href="deconnexion"><i class="fa fa-2x fa-sign-out text-primary mb-3 sr-icons"></i></a>

@@ -5,19 +5,14 @@ from .models import Brand, Category, Product, Favorite
 # Create your views here.
 
 
-def index(request):
-    products = Product.objects.filter()[:12]
-    context = {
-        'products': products,
-    }
-    return render(request, 'products/index.html', context)
-
-
 def listing(request):
     products = Product.objects.filter()
     formatted_products = ["<li>{}</li>".format(product.name) for product in products]
     products = "<ul>{}</ul>".format("\n".join(formatted_products))
-    return HttpResponse(products)
+    context = {
+        'products': products,
+    }
+    return render(request, 'products/list.html', context)
 
 
 def product_detail(request, product_id):
@@ -60,25 +55,21 @@ def brand_detail(request, brand_id):
 def search(request):
     query = request.GET.get('query')
     if not query:
-        products = Product.objects.all()
+        products = Product.objects.filter()[:12]  # # TODO: make a random choice
+        title = "Suggestion de produits"
 
     else:
         # title contains the query and query is not sensitive to case.
         products = Product.objects.filter(name__icontains=query)
+        title = "Résultats pour la requête {}".format(query)
 
-    if not products.exists():
-        message = "Misère de misère, nous n'avons trouvé aucun résultat !"
+    # if not products.exists():
+    #     products = Product.objects.filter(category__name__icontains=query)
+    #     title = "Résultats pour la requête {}".format(query)
 
-    else:
-        products = ["<li>{}</li>".format(product.name) for product in products]
-        message = """
-            Nous avons trouvé les produits correspondant à votre requête ! Les voici :
-            <ul>{}</ul>
-        """.format("".join(products))
+    context = {
+        'products': products,
+        'title': title
+    }
 
-    return HttpResponse(message)
-
-
-def legals(request):
-
-    return render(request, 'products/legals.html')
+    return render(request, 'products/search.html', context)
