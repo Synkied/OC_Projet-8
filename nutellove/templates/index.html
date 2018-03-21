@@ -1,4 +1,6 @@
 {% extends 'base.html' %}
+{% load static %}
+{% load i18n %}
 
 {% block body %}
 
@@ -7,15 +9,21 @@
         <div class="row">
           <div class="col-lg-10 mx-auto">
             <h1 class="text-uppercase">
-              <span class="primary-title">Du gras, oui, mais de qualité !</span>
-            </h1>
+              <span class="primary-title">
+              {% comment %}Translators: Moto of the website{% endcomment %}
+              {% blocktrans %} Du gras, oui, mais de qualité ! {% endblocktrans %}
+            </span>
+            </h1> 
             <hr>
           </div>
           <div class="col-lg-8 mx-auto">
-            <h2 class="text-faded mb-5">Trouvez un produit de substitution pour ceux que vous consommez tous les jours !</h2>
-            {% include 'shared/search_form.html' %}
+            <h2 class="text-faded mb-5">
+              {% comment %}Translators: No product found{% endcomment %}
+              {% blocktrans %} Trouvez un produit de substitution pour ceux que vous consommez tous les jours ! {% endblocktrans %}
+            </h2>
           </div>
         </div>
+        {% include 'shared/search_form.html' %}
       </div>
     </header>
 
@@ -23,26 +31,32 @@
       <div class="container">
         <div class="row">
           <div class="col-lg-12 text-center">
-            <h2 class="section-heading">Colette et Rémy</h2>
+            <h2 class="section-heading">{% blocktrans %} Colette et Rémy {% endblocktrans %}</h2>
             <hr class="my-4">
           </div>
         </div>
       </div>
       <div class="container">
-        <p class="col-lg-12 col-md-6 text-center">Nous sommes Colette et Rémy, cool.</p>
+        <h4 class="col-lg-12 col-md-6 text-center">{% blocktrans %} Le mot des fondateurs. {% endblocktrans %}</h4>
         <div class="row">
           <div class="col-lg-6 col-md-6 text-center">
             <div class="service-box mt-5 mx-auto">
-              <i class="fa fa-4x fa-diamond text-primary mb-3 sr-icons"></i>
+              <img src="{% static 'img/colette-4_small.jpg' %}" height="150" alt="Photo de Colette">
               <h3 class="mb-3">Colette</h3>
-              <p class="text-muted mb-0">Our templates are updated regularly so they don't break.</p>
+              <p class="text-muted mb-0 text-justify">{% blocktrans %} "Nous aimons tous manger, surtout en France ! 
+                Personnellement, une baguette fraîche, du bon fromage de chèvre et un bon vin rouge me suffisent amplement. 
+                Comme tout le monde, je fais mes courses au supermarché. 
+                Mais petit à petit je me suis rendue compte, surtout lorsque nous avons ouvert le restaurant, 
+                que je pouvais remplacer les produits aseptisés que j'avais l'habitude d'acheter par de bons produits du terroir. Et souvent pour le même prix !" {% endblocktrans %}</p>
             </div>
           </div>
           <div class="col-lg-6 col-md-6 text-center">
             <div class="service-box mt-5 mx-auto">
-              <i class="fa fa-4x fa-paper-plane text-primary mb-3 sr-icons"></i>
+              <img src="{% static 'img/remy-8_small.jpg' %}" height="150" alt="Photo de Rémy">
               <h3 class="mb-3">Rémy</h3>
-              <p class="text-muted mb-0">You can use this theme as is, or you can make changes!</p>
+              <p class="text-muted mb-0 text-justify">{% blocktrans %} "Pour ma part je me rendais déjà dans bien des magasins car j'aime beaucoup me balader, surtout dans les caves et les cuisines. 
+                Je connaissais par coeur le contenu des boutiques bio (dont je raffole) ainsi que les ingrédients de tous les aliments vendus. 
+                Lorsque Colette m'a demandé si elle pouvait remplacer son Nutella matinal par un aliment plus sain, je savais tout de suite où le trouver. L'idée de Pur Beurre était née !" {% endblocktrans %}</p>
             </div>
           </div>
         </div>
@@ -53,9 +67,9 @@
       <div class="container">
         <div class="row">
           <div class="col-lg-8 mx-auto text-center">
-            <h2 class="section-heading">Contactez-nous !</h2>
+            <h2 class="section-heading">{% blocktrans %} Contactez-nous ! {% endblocktrans %}</h2>
             <hr class="my-4">
-            <p class="mb-5">On ne mange pas, alors n'hésitez pas à nous contacter !</p>
+            <p class="mb-5">{% blocktrans %} On ne mange pas, alors n'hésitez pas à nous contacter ! {% endblocktrans %}</p>
           </div>
         </div>
         <div class="row">

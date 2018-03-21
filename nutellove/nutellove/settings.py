@@ -25,7 +25,7 @@ SECRET_KEY = '#c@z2cn1vsm&sgmlokpx+qd$27lm#5(b)igjbf!)k&k60vt#c#'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
 
 
 # Application definition
@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'debug_toolbar',
     'products',
+    # 'proper_paginate',
 ]
 
 MIDDLEWARE = [
