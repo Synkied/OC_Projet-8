@@ -16,32 +16,79 @@
     {% include 'shared/search_form.html' %}
 
   {% else %}
+  <!-- display the chosen random product -->
     <div class="row">
+      <div class=" col-md-12 text-center mb-5 align-bottom">
+        <a href="{% url 'products:product_detail' product_id=product_query.id %}">
 
+          {% if product_query.img_small is none %}
+            <img class="img-responsive" src="{% static 'img/logo_pur_beurre.png' %}" alt="{{ product_query.name }}">
+          {% else %}
+            <img class="img-responsive" src="{{ product_query.img_small }}" alt="{{ product_query.name }}">
+          {% endif %}
+
+        </a>
+        <!-- display the name of the product -->
+        <h3><a href="{% url 'products:product_detail' product_id=product_query.id %}">{{ product_query.name }}</a></h3>
+
+        <ul class="list-inline">
+            {% for brand in product_query.brands.all %}
+              {% if product_query.brands.all|length > "1" %}
+                <li class="list-inline-item"><a href="">{{ brand.name }}, </a></li>
+              {% else %}
+                <li class="list-inline-item"><a href="">{{ brand.name }} </a></li>
+              {% endif %}
+            {% endfor %}
+          </ul>
+        <p><span class="badge badge-primary">{{ product_query.nutri_grade }}</span></p>
+      </div>
+    </div>
+    <!-- !!end display the chosen random product -->
+    
+    <!-- display better products than the one selected -->
+    <div class="row">
       {% for product in products %}
-        <div class="col-xl-3 col-lg-4 col-md-4 col-xs-1 text-center mb-5 align-bottom">
-          <a href="{% url 'products:product_detail' product_id=product.id %}">
+      <!-- display infos about product -->
+        <div class="col-xl-4 col-lg-4 col-md-4 col-xs-1 text-center mb-5 align-bottom">
 
+          <a href="{% url 'products:product_detail' product_id=product.id %}">
             {% if product.img_small is none %}
               <img class="img-responsive" src="{% static 'img/logo_pur_beurre.png' %}" alt="{{ product.name }}">
             {% else %}
               <img class="img-responsive" src="{{ product.img_small }}" alt="{{ product.name }}">
             {% endif %}
-
           </a>
+
+          <!-- display the name of the product -->
           <h3><a href="{% url 'products:product_detail' product_id=product.id %}">{{ product.name }}</a></h3>
 
-          {% for brand in product.brands.all %}
-            <p><a href="">{{ brand.name }}</a></p>
-          {% endfor %}
+          <!-- display brands for each product, with a comma or not depending on brand index -->
+          <ul class="list-inline">
+            {% for brand in product.brands.all %}
+              {% if product.brands.all|length_is:"1" %}
+                <li class="list-inline-item"><a href="">{{ brand.name }} </a></li>
+              {% else %}
+                {% if forloop.counter < product.brands.all|length %}
+                  <li class="list-inline-item"><a href="">{{ brand.name }}, </a></li>
+                {% else %}
+                  <li class="list-inline-item"><a href="">{{ brand.name }} </a></li>
+                {% endif %}
+              {% endif %}
+            {% endfor %}
+          </ul>
+          <!-- !!end display brands for each product -->
+
+          <p><span class="badge badge-primary">{{ product.nutri_grade }}</span></p>
 
         </div>
         {% if forloop.counter|divisibleby:3 %}<div class="clearfix"></div>{% endif %}
       {% endfor %}
-
+    <!-- !!end display infos about product -->
     </div>
+    <!-- !!end of display better products than the one selected -->
   {% endif %}
-  
+
+  <!-- display a page nav if there are many products -->
   {% if paginate %}
     <div class="row">
       <div class="col-sm-4 text-center">
@@ -77,5 +124,6 @@
       </div>
     </div>
   {% endif %}
+  <!-- !!end display a page nav if there are many products -->
 
 </section>

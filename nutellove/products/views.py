@@ -1,3 +1,5 @@
+from random import randint
+
 from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404
 from .models import Brand, Category, Product, Favorite
@@ -95,6 +97,7 @@ def search(request):
     Used to handle queries from user and perform a search
     """
     query = request.GET.get('query')
+
     if not query:
         products = Product.objects.filter()[:12]  # # TODO: make a random choice
         title = gettext("Suggestion de produits")
@@ -102,15 +105,34 @@ def search(request):
     else:
         # title contains the query and query is not sensitive to case.
         products_list = Product.objects.filter(name__icontains=query)
-        title = gettext("Résultats pour la requête {}".format(query.capitalize()))
+        # chose a random product from the query
+        product_query = products_list[0]
 
-        products = view_pagination(request, 12, products_list)
+        if product_query.nutri_grade == "a":
+            better_products = [
+                product for product in products_list
+                if product.nutri_grade == product_query.nutri_grade
+            ]
+        else:
+            better_products = [
+                product for product in products_list
+                if product.nutri_grade < product_query.nutri_grade
+            ]
+
+        title = gettext(
+            "Résultats pour la requête {}".format(
+                query.capitalize()
+            )
+        )
+
+        products = view_pagination(request, 6, better_products)
 
     # if not products.exists():
     #     products = Product.objects.filter(category__name__icontains=query)
     #     title = "Résultats pour la requête {}".format(query)
 
     context = {
+        'product_query': product_query,
         'products': products,
         'title': title,
         'paginate': True,

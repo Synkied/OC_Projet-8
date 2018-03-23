@@ -18,17 +18,14 @@ from django.conf.urls import include, url
 from django.contrib import admin
 from django.urls import path
 from products import views as product_views
-from . import views
 from django.views.generic import TemplateView
 
 urlpatterns = [
     path('', TemplateView.as_view(template_name="index.html"), name="index"),  # homepage
     path('products/', include('products.urls', namespace="products")),
-    # path('brands/', include('products.urls', namespace="")),
-    # path('stores/', include('products.urls', namespace="")),
     path('legals/', TemplateView.as_view(template_name="legals.html"), name="legals"),
     path('admin/', admin.site.urls),
-    path('search/', product_views.search, name='search')
+    path('search/', product_views.search, name='search'),
 ]
 
 
