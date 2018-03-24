@@ -114,26 +114,31 @@ class Search(View):
             products_list = Product.objects.filter(name__icontains=query)
             # chose a random product from the query
 
-            chosen_product = products_list[0]
+            if len(products_list) > 0:
+                chosen_product = products_list[0]
 
-            if chosen_product.nutri_grade == "a":
-                better_products = [
-                    product for product in products_list
-                    if product.nutri_grade == chosen_product.nutri_grade
-                ]
+                if chosen_product.nutri_grade == "a":
+                    better_products = [
+                        product for product in products_list
+                        if product.nutri_grade == chosen_product.nutri_grade
+                    ]
+                else:
+                    better_products = [
+                        product for product in products_list
+                        if product.nutri_grade < chosen_product.nutri_grade
+                    ]
+
+                products = view_pagination(request, 6, better_products)
+
             else:
-                better_products = [
-                    product for product in products_list
-                    if product.nutri_grade < chosen_product.nutri_grade
-                ]
+                chosen_product = None
+                products = products_list
 
             title = gettext(
                 "Résultats pour la requête {}".format(
                     query.capitalize()
                 )
             )
-
-            products = view_pagination(request, 6, better_products)
 
         # if not products.exists():
         #     products = Product.objects.filter(category__name__icontains=query)

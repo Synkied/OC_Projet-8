@@ -13,9 +13,9 @@
       {% comment %}Translators: No product found{% endcomment %}
       {% blocktrans %} Mince, aucun produit ne correspond à cette recherche. Cherchez à nouveau ! {% endblocktrans %}
     </div>
-    {% include 'shared/search_form.html' %}
 
   {% else %}
+  {% include 'shared/search_form.html' %}
   <!-- display the chosen random product -->
     <div class="row">
       <div class=" col-md-12 text-center mb-5 align-bottom">
