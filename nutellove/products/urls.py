@@ -11,5 +11,5 @@ urlpatterns = [
     # what to display for url products/<id>
     path('<int:product_id>', views.product_detail, name='product_detail'),
     # what to display for url products/search/?query=<query>
-    path('search/', views.search, name='search'),
+    path('search/', views.Search.as_view(), name='search'),
 ]

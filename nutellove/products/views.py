@@ -5,6 +5,7 @@ from django.shortcuts import render, get_object_or_404
 from .models import Brand, Category, Product, Favorite
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.utils.translation import gettext
+from django.views import View
 
 # Create your views here.
 
@@ -92,51 +93,58 @@ def brand_detail(request, brand_id):
     return render(request, 'products/brand_details.html', context)
 
 
-def search(request):
-    """
-    Used to handle queries from user and perform a search
-    """
-    query = request.GET.get('query')
+class Search(View):
 
-    if not query:
-        products = Product.objects.filter()[:12]  # # TODO: make a random choice
-        title = gettext("Suggestion de produits")
+    def __init__(self):
+        self.chosen_product = False
 
-    else:
-        # title contains the query and query is not sensitive to case.
-        products_list = Product.objects.filter(name__icontains=query)
-        # chose a random product from the query
-        product_query = products_list[0]
+    def get(self, request):
+        """
+        Used to handle queries from user and perform a search
+        """
+        query = request.GET.get('query')
+        # page = request.GET.get('page')
 
-        if product_query.nutri_grade == "a":
-            better_products = [
-                product for product in products_list
-                if product.nutri_grade == product_query.nutri_grade
-            ]
+        if not query:
+            products = Product.objects.filter()[:12]  # # TODO: make a random choice
+            title = gettext("Suggestion de produits")
+
         else:
-            better_products = [
-                product for product in products_list
-                if product.nutri_grade < product_query.nutri_grade
-            ]
+            # title contains the query and query is not sensitive to case.
+            products_list = Product.objects.filter(name__icontains=query)
+            # chose a random product from the query
 
-        title = gettext(
-            "Résultats pour la requête {}".format(
-                query.capitalize()
+            chosen_product = products_list[0]
+
+            if chosen_product.nutri_grade == "a":
+                better_products = [
+                    product for product in products_list
+                    if product.nutri_grade == chosen_product.nutri_grade
+                ]
+            else:
+                better_products = [
+                    product for product in products_list
+                    if product.nutri_grade < chosen_product.nutri_grade
+                ]
+
+            title = gettext(
+                "Résultats pour la requête {}".format(
+                    query.capitalize()
+                )
             )
-        )
 
-        products = view_pagination(request, 6, better_products)
+            products = view_pagination(request, 6, better_products)
 
-    # if not products.exists():
-    #     products = Product.objects.filter(category__name__icontains=query)
-    #     title = "Résultats pour la requête {}".format(query)
+        # if not products.exists():
+        #     products = Product.objects.filter(category__name__icontains=query)
+        #     title = "Résultats pour la requête {}".format(query)
 
-    context = {
-        'product_query': product_query,
-        'products': products,
-        'title': title,
-        'paginate': True,
-        'query': query,
-    }
+        context = {
+            'chosen_product': chosen_product,
+            'products': products,
+            'title': title,
+            'paginate': True,
+            'query': query,
+        }
 
-    return render(request, 'products/search.html', context)
+        return render(request, 'products/search.html', context)

@@ -25,7 +25,7 @@ urlpatterns = [
     path('products/', include('products.urls', namespace="products")),
     path('legals/', TemplateView.as_view(template_name="legals.html"), name="legals"),
     path('admin/', admin.site.urls),
-    path('search/', product_views.search, name='search'),
+    path('search/', product_views.Search.as_view(), name='search'),
 ]
 
 

@@ -19,28 +19,35 @@
   <!-- display the chosen random product -->
     <div class="row">
       <div class=" col-md-12 text-center mb-5 align-bottom">
-        <a href="{% url 'products:product_detail' product_id=product_query.id %}">
+        <a href="{% url 'products:product_detail' product_id=chosen_product.id %}">
 
-          {% if product_query.img_small is none %}
-            <img class="img-responsive" src="{% static 'img/logo_pur_beurre.png' %}" alt="{{ product_query.name }}">
+          {% if chosen_product.img_small is none %}
+            <img class="img-responsive" src="{% static 'img/logo_pur_beurre.png' %}" alt="{{ chosen_product.name }}">
           {% else %}
-            <img class="img-responsive" src="{{ product_query.img_small }}" alt="{{ product_query.name }}">
+            <img class="img-responsive" src="{{ chosen_product.img_small }}" alt="{{ chosen_product.name }}">
           {% endif %}
 
         </a>
         <!-- display the name of the product -->
-        <h3><a href="{% url 'products:product_detail' product_id=product_query.id %}">{{ product_query.name }}</a></h3>
+        <h3><a href="{% url 'products:product_detail' product_id=chosen_product.id %}">{{ chosen_product.name }}</a></h3>
 
-        <ul class="list-inline">
-            {% for brand in product_query.brands.all %}
-              {% if product_query.brands.all|length > "1" %}
-                <li class="list-inline-item"><a href="">{{ brand.name }}, </a></li>
-              {% else %}
+        <!-- display brands for each product, with a comma or not depending on brand index -->
+          <ul class="list-inline">
+            {% for brand in chosen_product.brands.all %}
+              {% if chosen_product.brands.all|length_is:"1" %}
                 <li class="list-inline-item"><a href="">{{ brand.name }} </a></li>
+              {% else %}
+                {% if forloop.counter < chosen_product.brands.all|length %}
+                  <li class="list-inline-item"><a href="">{{ brand.name }}, </a></li>
+                {% else %}
+                  <li class="list-inline-item"><a href="">{{ brand.name }} </a></li>
+                {% endif %}
               {% endif %}
             {% endfor %}
           </ul>
-        <p><span class="badge badge-primary">{{ product_query.nutri_grade }}</span></p>
+          <!-- !!end display brands for each product -->
+
+        <p><span class="badge badge-primary">{{ chosen_product.nutri_grade }}</span></p>
       </div>
     </div>
     <!-- !!end display the chosen random product -->
