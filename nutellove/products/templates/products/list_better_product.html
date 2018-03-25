@@ -1,136 +1,36 @@
+<!-- Page used to display a better product than the one chosen at /search/?query url -->
+
 {% load static %}
 {% load i18n %}
 
-<section>
-  <div class="col-lg-12">
-    <h2 class="intro-text text-center">{{ list_title }}
-    </h2>
-    <hr class="detail-separator mb-5">
-  </div>
+
+<section id="better-product">
 
   {% if products|length_is:"0" %}
     <div class="text-center mb-5">
       {% comment %}Translators: No product found{% endcomment %}
       {% blocktrans %} Mince, aucun produit ne correspond à cette recherche. Cherchez à nouveau ! {% endblocktrans %}
     </div>
+    {% include 'shared/search_form.html' %}
+
+  {% elif not query %}
+    
+    {% include 'products/shared/list_of_products.html'%}
 
   {% else %}
-  {% include 'shared/search_form.html' %}
-  <!-- display the chosen random product -->
-    <div class="row">
-      <div class=" col-md-12 text-center mb-5 align-bottom">
-        <a href="{% url 'products:product_detail' product_id=chosen_product.id %}">
 
-          {% if chosen_product.img_small is none %}
-            <img class="img-responsive" src="{% static 'img/logo_pur_beurre.png' %}" alt="{{ chosen_product.name }}">
-          {% else %}
-            <img class="img-responsive" src="{{ chosen_product.img_small }}" alt="{{ chosen_product.name }}">
-          {% endif %}
+    <!-- display the chosen product -->
+    {% include 'products/shared/chosen_product.html' %}
 
-        </a>
-        <!-- display the name of the product -->
-        <h3><a href="{% url 'products:product_detail' product_id=chosen_product.id %}">{{ chosen_product.name }}</a></h3>
-
-        <!-- display brands for each product, with a comma or not depending on brand index -->
-          <ul class="list-inline">
-            {% for brand in chosen_product.brands.all %}
-              {% if chosen_product.brands.all|length_is:"1" %}
-                <li class="list-inline-item"><a href="">{{ brand.name }} </a></li>
-              {% else %}
-                {% if forloop.counter < chosen_product.brands.all|length %}
-                  <li class="list-inline-item"><a href="">{{ brand.name }}, </a></li>
-                {% else %}
-                  <li class="list-inline-item"><a href="">{{ brand.name }} </a></li>
-                {% endif %}
-              {% endif %}
-            {% endfor %}
-          </ul>
-          <!-- !!end display brands for each product -->
-
-        <p><span class="badge badge-primary">{{ chosen_product.nutri_grade }}</span></p>
-      </div>
-    </div>
-    <!-- !!end display the chosen random product -->
-    
-    <!-- display better products than the one selected -->
-    <div class="row">
-      {% for product in products %}
-      <!-- display infos about product -->
-        <div class="col-xl-4 col-lg-4 col-md-4 col-xs-1 text-center mb-5 align-bottom">
-
-          <a href="{% url 'products:product_detail' product_id=product.id %}">
-            {% if product.img_small is none %}
-              <img class="img-responsive" src="{% static 'img/logo_pur_beurre.png' %}" alt="{{ product.name }}">
-            {% else %}
-              <img class="img-responsive" src="{{ product.img_small }}" alt="{{ product.name }}">
-            {% endif %}
-          </a>
-
-          <!-- display the name of the product -->
-          <h3><a href="{% url 'products:product_detail' product_id=product.id %}">{{ product.name }}</a></h3>
-
-          <!-- display brands for each product, with a comma or not depending on brand index -->
-          <ul class="list-inline">
-            {% for brand in product.brands.all %}
-              {% if product.brands.all|length_is:"1" %}
-                <li class="list-inline-item"><a href="">{{ brand.name }} </a></li>
-              {% else %}
-                {% if forloop.counter < product.brands.all|length %}
-                  <li class="list-inline-item"><a href="">{{ brand.name }}, </a></li>
-                {% else %}
-                  <li class="list-inline-item"><a href="">{{ brand.name }} </a></li>
-                {% endif %}
-              {% endif %}
-            {% endfor %}
-          </ul>
-          <!-- !!end display brands for each product -->
-
-          <p><span class="badge badge-primary">{{ product.nutri_grade }}</span></p>
-
-        </div>
-        {% if forloop.counter|divisibleby:3 %}<div class="clearfix"></div>{% endif %}
-      {% endfor %}
-    <!-- !!end display infos about product -->
-    </div>
-    <!-- !!end of display better products than the one selected -->
+    <!-- display better products than the one chosen -->
+    {% include 'products/shared/list_of_products.html'%}
   {% endif %}
 
   <!-- display a page nav if there are many products -->
-  {% if paginate %}
-    <div class="row">
-      <div class="col-sm-4 text-center">
-
-        {% if products.has_other_pages %}
-          <nav aria-label="{% blocktrans %} Pages de résultats de recherche {% endblocktrans %}">
-
-            <ul class="pagination">
-              {% if products.has_previous %}
-                <li class="page-item"><a class="page-link" href="?{% if query %}query={{ query }}&{% endif %}page={{ products.previous_page_number }}" aria-label="{% blocktrans %} Précédent {% endblocktrans %}">&laquo;</a></li>
-              {% else %}
-                <li class="page-item disabled"><span><a class="page-link" href="#" tabindex="-1">&laquo;</a></span></li>
-              {% endif %}
-
-              {% for i in products.paginator.page_range %}
-                {% if products.number == i %}
-                  <li class="page-item active"><a class="page-link" href="#"><span>{{ i }} <span class="sr-only">(current)</span></span></a></li>
-                {% else %}
-                  <li class="page-item"><a class="page-link" href="?{% if query %}query={{ query }}&{% endif %}page={{ i }}">{{ i }}</a></li>
-                {% endif %}
-              {% endfor %}
-
-              {% if products.has_next %}
-                <li class="page-item"><a class="page-link" href="?{% if query %}query={{ query }}&{% endif %}page={{ products.next_page_number }}" aria-label="{% blocktrans %} Suivant {% endblocktrans %}">&raquo;</a></li>
-              {% else %}
-                <li class="page-item disabled"><span><a class="page-link" href="#" tabindex="-1">&raquo;</a></span></li>
-              {% endif %}
-            </ul>
-
-          </nav>
-        {% endif %}
-
-      </div>
-    </div>
-  {% endif %}
+<!--   {% if paginate %}
+  {% include 'products/shared/pagination.html' %}
+{% endif %} -->
   <!-- !!end display a page nav if there are many products -->
 
 </section>
+

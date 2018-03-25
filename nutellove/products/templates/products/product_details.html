@@ -1,51 +1,68 @@
 {% extends 'base.html' %}
+{% load static %}
 {% load i18n %}
 
 
 {% block body %}
-  <section>
-    <div class="container">
+  <section id="product-detail">
       <div class="row">
-        <div class="col-xl-5 col-lg-6 col-md-8 col-xs-1">
-          <img class="product_img" src="{{ img }}" alt="">
-          <h2 class="mt-3">{{ product_name }}</h2>
+        <div class=" col-md-12 text-center mb-5 align-bottom">
 
-          {% for brand in brands %}
-            <a href="">{{ brand }}</a>
-          {% endfor %}
+          {% if product.img is none %}
+            <div class="contain">
+                <div class="img-container" style="background-image: url({% static 'img/placeholder.png' %})"></div>
+                <div class="text-block text-left">
+                  <h4 class="superpose-img">{{ product.name }}</h4>
+                </div>
+              </div>
+
+            {% else %}
+            <div class="contain">
+                <div class="img-container" style="background-image: url({{ product.img }})"></div>
+                <div class="text-block text-left">
+                  <h4 class="superpose-img">{{ product.name }}</h4>
+                </div>
+              </div>
+            {% endif %}
 
         </div>
-        <div class="col-xl-5 col-lg-6 col-md-4 col-xs-1">
-          <p><span class="title-cat">{% blocktrans %} Catégorie : {% endblocktrans %}</span> {{ category }}</p>
-          <p><span class="title-cat">{% blocktrans %} Nutri grade : {% endblocktrans %}</span> {{ nutri_grade }}</p>
-          <table class="table">
-            <caption>
-              <span class="title-cat">{% blocktrans %} Valeurs nutritionelles (pour 100 g) {% endblocktrans %}</span>
-            </caption>
-            <thead class="thead-light">
-              <tr>
-                <th>{% blocktrans %} Énergie (Kcal) {% endblocktrans %}</th>
-                <th>{% blocktrans %} Protéines (g) {% endblocktrans %}</th>
-                <th>{% blocktrans %} Matières grasses (g) {% endblocktrans %}</th>
-                <th>{% blocktrans %} Sucres (g) {% endblocktrans %}</th>
-                <th>{% blocktrans %} Fibres (g) {% endblocktrans %}</th>
-                <th>{% blocktrans %} Sel (g) {% endblocktrans %}</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>{{ energy }}</td>
-                <td>{{ proteins }}</td>
-                <td>{{ fat }}</td>
-                <td>{{ sugars }}</td>
-                <td>{{ fibers }}</td>
-                <td>{{ salt }}</td>
-              </tr>
-            </tbody>
-          </table>
-          <p><span class="title-cat">{% blocktrans %} Url vers la fiche OpenFoodFacts : {% endblocktrans %}</span> <a href="{{ url }}">{{ url }}</a></p>
+      </div>
+      
+      <div class="container">
+        <div class="row text-center">
+          <div class="col-xl-6 col-lg-6 col-md-4 col-xs-1 mx-auto">
+            <p><span class="title-cat">{% blocktrans %} Catégorie : {% endblocktrans %}</span> <a href="">{{ category }}</a></p>
+            <p><span class="title-cat">{% blocktrans %} Nutriscore : {% endblocktrans %}</span> <span class="badge badge-primary">{{ product.nutri_grade }}</span></p>
+            <table class="table">
+              <caption>
+                <span class="title-cat">{% blocktrans %} Valeurs nutritionelles (pour 100 g) {% endblocktrans %}</span>
+              </caption>
+              <thead class="thead-light">
+                <tr>
+                  <th>{% blocktrans %} Énergie (Kcal) {% endblocktrans %}</th>
+                  <th>{% blocktrans %} Protéines (g) {% endblocktrans %}</th>
+                  <th>{% blocktrans %} Matières grasses (g) {% endblocktrans %}</th>
+                  <th>{% blocktrans %} Sucres (g) {% endblocktrans %}</th>
+                  <th>{% blocktrans %} Fibres (g) {% endblocktrans %}</th>
+                  <th>{% blocktrans %} Sel (g) {% endblocktrans %}</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>{{ product.energy }}</td>
+                  <td>{{ product.proteins }}</td>
+                  <td>{{ product.fat }}</td>
+                  <td>{{ product.sugars }}</td>
+                  <td>{{ product.fibers }}</td>
+                  <td>{{ product.salt }}</td>
+                </tr>
+              </tbody>
+            </table>
+            <a class="btn btn-primary text-white" href="{{ product.url }}">Voir la fiche OpenFoodFacts</a>
+          </div>
         </div>
       </div>
     </div>
+      
   </section>
 {% endblock %}

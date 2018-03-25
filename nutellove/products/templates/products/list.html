@@ -1,3 +1,5 @@
+<!-- Page used to display all products available at the /products/ root url -->
+
 {% load static %}
 {% load i18n %}
 
@@ -15,67 +17,14 @@
     </div>
     {% include 'shared/search_form.html' %}
 
-  {% else %}
-    <div class="row">
-
-      {% for product in products %}
-        <div class="col-xl-3 col-lg-4 col-md-4 col-xs-1 text-center mb-5 align-bottom">
-          <a href="{% url 'products:product_detail' product_id=product.id %}">
-
-            {% if product.img_small is none %}
-              <img class="img-responsive" src="{% static 'img/logo_pur_beurre.png' %}" alt="{{ product.name }}">
-            {% else %}
-              <img class="img-responsive" src="{{ product.img_small }}" alt="{{ product.name }}">
-            {% endif %}
-
-          </a>
-          <h3><a href="{% url 'products:product_detail' product_id=product.id %}">{{ product.name }}</a></h3>
-
-          {% for brand in product.brands.all %}
-            <p><a href="">{{ brand.name }}</a></p>
-          {% endfor %}
-
-        </div>
-        {% if forloop.counter|divisibleby:3 %}<div class="clearfix"></div>{% endif %}
-      {% endfor %}
-
-    </div>
+    {% else %}
+  {% include 'shared/search_form.html' %}
+    
+    {% include 'products/shared/list_of_products.html'%}
   {% endif %}
   
+  <!-- display a page nav if there are many products -->
   {% if paginate %}
-    <div class="row">
-      <div class="col-sm-4 text-center">
-
-        {% if products.has_other_pages %}
-          <nav aria-label="{% blocktrans %} Pages de résultats de recherche {% endblocktrans %}">
-
-            <ul class="pagination">
-              {% if products.has_previous %}
-                <li class="page-item"><a class="page-link" href="?{% if query %}query={{ query }}&{% endif %}page={{ products.previous_page_number }}" aria-label="{% blocktrans %} Précédent {% endblocktrans %}">&laquo;</a></li>
-              {% else %}
-                <li class="page-item disabled"><span><a class="page-link" href="#" tabindex="-1">&laquo;</a></span></li>
-              {% endif %}
-
-              {% for i in products.paginator.page_range %}
-                {% if products.number == i %}
-                  <li class="page-item active"><a class="page-link" href="#"><span>{{ i }} <span class="sr-only">(current)</span></span></a></li>
-                {% else %}
-                  <li class="page-item"><a class="page-link" href="?{% if query %}query={{ query }}&{% endif %}page={{ i }}">{{ i }}</a></li>
-                {% endif %}
-              {% endfor %}
-
-              {% if products.has_next %}
-                <li class="page-item"><a class="page-link" href="?{% if query %}query={{ query }}&{% endif %}page={{ products.next_page_number }}" aria-label="{% blocktrans %} Suivant {% endblocktrans %}">&raquo;</a></li>
-              {% else %}
-                <li class="page-item disabled"><span><a class="page-link" href="#" tabindex="-1">&raquo;</a></span></li>
-              {% endif %}
-            </ul>
-
-          </nav>
-        {% endif %}
-
-      </div>
-    </div>
+    {% include 'products/shared/pagination.html' %}
   {% endif %}
-
-</section>
+  <!-- !!end display a page nav if there are many products -->

@@ -1,0 +1,58 @@
+<!-- Displays a single product -->
+
+{% load static %}
+
+  <!-- display the chosen product -->
+    <div class="row">
+      <div class=" col-md-12 text-center mb-5 align-bottom">
+        <a href="{% url 'products:product_detail' product_id=chosen_product.id %}">
+
+          {% if chosen_product.img is none %}
+            <div class="contain">
+              <div class="img-container" style="background-image: url({% static 'img/placeholder.png' %})"></div>
+              <div class="text-block text-left">
+                <h4 class="superpose-img"><a href="{% url 'products:product_detail' product_id=chosen_product.id %}">{{ chosen_product.name }}</a></h4>
+                <ul class="list-inline">
+                  {% for brand in chosen_product.brands.all %}
+                    {% if chosen_product.brands.all|length_is:"1" %}
+                      <li class="list-inline-item"><a href="">{{ brand.name }} </a></li>
+                    {% else %}
+                      {% if forloop.counter < chosen_product.brands.all|length %}
+                        <li class="list-inline-item"><a href="">{{ brand.name }}, </a></li>
+                      {% else %}
+                        <li class="list-inline-item"><a href="">{{ brand.name }} </a></li>
+                      {% endif %}
+                    {% endif %}
+                  {% endfor %}
+                </ul>
+                <p>Nutriscore : <span class="badge badge-primary">{{ chosen_product.nutri_grade }}</span></p>
+              </div>
+            </div>
+
+          {% else %}
+            <div class="contain">
+              <div class="img-container" style="background-image: url({{ chosen_product.img }})"></div>
+              <div class="text-block">
+                <h4 class="superpose-img"><a href="{% url 'products:product_detail' product_id=chosen_product.id %}">{{ chosen_product.name }}</a></h4>
+                <ul class="list-inline">
+                  {% for brand in chosen_product.brands.all %}
+                    {% if chosen_product.brands.all|length_is:"1" %}
+                      <li class="list-inline-item"><a href="">{{ brand.name }} </a></li>
+                    {% else %}
+                      {% if forloop.counter < chosen_product.brands.all|length %}
+                        <li class="list-inline-item"><a href="">{{ brand.name }}, </a></li>
+                      {% else %}
+                        <li class="list-inline-item"><a href="">{{ brand.name }} </a></li>
+                      {% endif %}
+                    {% endif %}
+                  {% endfor %}
+                </ul>
+                <p>Nutriscore : <span class="badge badge-primary">{{ chosen_product.nutri_grade }}</span></p>
+              </div>
+            </div>
+          {% endif %}
+
+        </a>
+      </div>
+    </div>
+    <!-- !!end display the chosen product -->
