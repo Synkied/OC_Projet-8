@@ -1,5 +1,3 @@
-import json
-
 from django.contrib import auth
 from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404
@@ -20,17 +18,7 @@ def listing(request):
     products = view_pagination(request, 9, products_list)
     title = gettext("Tous nos produits")
 
-    # Get the index of the current page
-    index = products.number - 1  # edited to something easier without index
-    # This value is maximum index of your pages, so the last page - 1
-    max_index = len(products.paginator.page_range)
-    # You want a range of 7, so lets calculate where to slice the list
-    start_index = index - 10 if index >= 10 else 0
-    end_index = index + 10 if index <= max_index - 10 else max_index
-    # Get our new page range.
-    # In the latest versions of Django page_range returns an iterator.
-    # Thus pass it to list, to make our slice possible again.
-    page_range = list(products.paginator.page_range)[start_index:end_index]
+    page_range = page_indexing(products, 10)
 
     context = {
         'products': products,
@@ -75,6 +63,8 @@ def brand_detail(request, brand_id):
 
 
 class Search(View):
+
+    template_name = 'products/search.html'
 
     def get(self, request):
         """
@@ -143,7 +133,7 @@ class Search(View):
             'page_range': page_range,
         }
 
-        return render(request, 'products/search.html', context)
+        return render(request, self.template_name, context)
 
 
 class FavoriteView(View):
@@ -151,19 +141,13 @@ class FavoriteView(View):
     model = None
 
     def post(self, request, pk):
-        # We need a user
+        # Get the user if connected
         user = auth.get_user(request)
         # Trying to get a bookmark from the table, or create a new one
-        favorite, created = self.model.objects.get_or_create(user=user, obj_id=pk)
+        favorite, created = self.model.objects.get_or_create(substitute=pk, user=user)
         # If no new bookmark has been created,
         # Then we believe that the request was to delete the bookmark
         if not created:
             favorite.delete()
 
-        return HttpResponse(
-            json.dumps({
-                "result": created,
-                "count": self.model.objects.filter(obj_id=pk).count()
-            }),
-            content_type="application/json"
-        )
+        return render(request, 'index.html')

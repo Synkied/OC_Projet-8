@@ -54,10 +54,7 @@ class Product(models.Model):
 
 
 class Favorite(models.Model):
-    product = models.ForeignKey(
-        Product,
-        on_delete=models.CASCADE,
-    )
+
     substitute = models.ForeignKey(
         Product,
         related_name='products_substitute_set',

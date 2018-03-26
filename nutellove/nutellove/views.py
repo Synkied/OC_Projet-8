@@ -64,7 +64,7 @@ class UserAccountView(LoginRequiredMixin, View):
 
 
 class UserFavoritesView(LoginRequiredMixin, View):
-    template_name = 'favorites.html'
+    template_name = 'products/favorites.html'
 
     def get(self, request):
         context = {

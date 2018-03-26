@@ -33,7 +33,9 @@
 
           <div role="tabpanel" class="tab-pane active" id="currentPreferences">
             <ul class="list-group media-list media-list-stream">
-              <p>Pref</p>
+              {% for favorite in favorites %}
+                <p>{{ favorite }}</p>
+              {% endfor %}
             </ul>
           </div>
 

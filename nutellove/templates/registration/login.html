@@ -10,8 +10,13 @@
           <form action="" method="post">
             {% csrf_token %}
             {% include 'shared/form_template.html' %}
-            <div class="text-center">
-                <button type="submit" class="btn mt-4 btn-secondary">{% blocktrans %} Se connecter {% endblocktrans %}</button>
+            <div class="text-center mt-4">
+              <div class="text-center d-inline">
+                  <button type="submit" class="btn btn-secondary">{% blocktrans %} Se connecter {% endblocktrans %}</button>
+              </div>
+              <div class="form-group d-inline">
+                <a href="{% url 'register' %}" class="text-white ml-5">{% blocktrans %} S'enregistrer {% endblocktrans %}</a>
+              </div>
             </div>
           </form>
         </div>

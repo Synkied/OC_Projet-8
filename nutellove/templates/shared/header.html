@@ -10,7 +10,7 @@
     <div class="collapse navbar-collapse" id="navbarResponsive">
       <ul class="navbar-nav ml-auto">
         <li class="nav-item">
-          <a class="nav-link js-scroll-trigger" href="{% if user.is_authenticated %} {% url 'account' %} {% else %}{% url 'register' %}{% endif %}"><i class="fa fa-2x fa-user text-primary mb-3 sr-icons"></i></a>
+          <a class="nav-link js-scroll-trigger" href="{% if user.is_authenticated %} {% url 'account' %} {% else %}{% url 'login' %}{% endif %}"><i class="{% if user.is_authenticated %}fa fa-2x fa-user {% else %} fa fa-2x fa-user-plus {% endif %} text-primary mb-3 sr-icons"></i></a>
         </li>
         <!-- if user is auth then show favorites page, else go to registration -->
         <li class="nav-item">

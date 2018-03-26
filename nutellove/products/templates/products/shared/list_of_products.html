@@ -38,7 +38,8 @@
 
         <p class="nutri-grade"><span class="badge badge-primary">{{ product.nutri_grade }}</span></p>
         <div class="favs">
-          <a class="add-fav" href="{% url 'products:bookmark' %}">
+          <!-- pass product_id to the url, to use it in the view and push it to db -->
+          <a class="add-fav" href="{% url 'products:bookmark' product_id=product.id %}">
             {% blocktrans %}Ajouter aux favoris{% endblocktrans %}
             <i class="fa fa-heart"></i>
           </a>
