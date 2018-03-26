@@ -1,41 +1,49 @@
 <!-- Displays a list of products -->
 
 {% load static %}
+{% load i18n %}
 
 
 <div class="row">
   {% for product in products %}
   <!-- display infos about product -->
-    <div class="col-xl-4 col-lg-4 col-md-4 col-xs-1 text-center mb-5 align-bottom">
-
-      <a href="{% url 'products:product_detail' product_id=product.id %}">
-        {% if product.img_small is none %}
-          <img class="img-responsive" src="{% static 'img/logo_pur_beurre.png' %}" alt="{{ product.name }}">
-        {% else %}
-          <img class="img-responsive" src="{{ product.img_small }}" alt="{{ product.name }}">
-        {% endif %}
-      </a>
-
-      <!-- display the name of the product -->
-      <h3><a href="{% url 'products:product_detail' product_id=product.id %}">{{ product.name }}</a></h3>
-
-      <!-- display brands for each product, with a comma or not depending on brand index -->
-      <ul class="list-inline">
-        {% for brand in product.brands.all %}
-          {% if product.brands.all|length_is:"1" %}
-            <li class="list-inline-item"><a href="">{{ brand.name }} </a></li>
+    <div class="col-xl-4 col-lg-4 col-md-4 col-xs-1 text-center border">
+      <div class="container vbottom p-3">
+        <a href="{% url 'products:product_detail' product_id=product.id %}">
+          {% if product.img_small is none %}
+            <img class="img-responsive" src="{% static 'img/logo_pur_beurre.png' %}" alt="{{ product.name }}">
           {% else %}
-            {% if forloop.counter < product.brands.all|length %}
-              <li class="list-inline-item"><a href="">{{ brand.name }}, </a></li>
-            {% else %}
-              <li class="list-inline-item"><a href="">{{ brand.name }} </a></li>
-            {% endif %}
+            <img class="img-responsive" src="{{ product.img_small }}" alt="{{ product.name }}">
           {% endif %}
-        {% endfor %}
-      </ul>
-      <!-- !!end display brands for each product -->
+        </a>
 
-      <p><span class="badge badge-primary">{{ product.nutri_grade }}</span></p>
+        <!-- display the name of the product -->
+        <h3><a href="{% url 'products:product_detail' product_id=product.id %}">{{ product.name }}</a></h3>
+
+        <!-- display brands for each product, with a comma or not depending on brand index -->
+        <ul class="list-inline">
+          {% for brand in product.brands.all %}
+            {% if product.brands.all|length_is:"1" %}
+              <li class="list-inline-item"><a href="">{{ brand.name }} </a></li>
+            {% else %}
+              {% if forloop.counter < product.brands.all|length %}
+                <li class="list-inline-item"><a href="">{{ brand.name }}, </a></li>
+              {% else %}
+                <li class="list-inline-item"><a href="">{{ brand.name }} </a></li>
+              {% endif %}
+            {% endif %}
+          {% endfor %}
+        </ul>
+        <!-- !!end display brands for each product -->
+
+        <p class="nutri-grade"><span class="badge badge-primary">{{ product.nutri_grade }}</span></p>
+        <div class="favs">
+          <a class="add-fav" href="{% url 'products:bookmark' %}">
+            {% blocktrans %}Ajouter aux favoris{% endblocktrans %}
+            <i class="fa fa-heart"></i>
+          </a>
+        </div>
+      </div>
 
     </div>
     {% if forloop.counter|divisibleby:3 %}<div class="clearfix"></div>{% endif %}

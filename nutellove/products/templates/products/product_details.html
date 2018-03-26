@@ -4,7 +4,7 @@
 
 
 {% block body %}
-  <section id="product-detail">
+  <section class="section-pad">
       <div class="row">
         <div class=" col-md-12 text-center mb-5 align-bottom">
 
@@ -13,6 +13,17 @@
                 <div class="img-container" style="background-image: url({% static 'img/placeholder.png' %})"></div>
                 <div class="text-block text-left">
                   <h4 class="superpose-img">{{ product.name }}</h4>
+                  {% for brand in product.brands.all %}
+                    {% if product.brands.all|length_is:"1" %}
+                      <li class="list-inline-item"><a href="">{{ brand.name }} </a></li>
+                    {% else %}
+                      {% if forloop.counter < product.brands.all|length %}
+                        <li class="list-inline-item"><a href="">{{ brand.name }}, </a></li>
+                      {% else %}
+                        <li class="list-inline-item"><a href="">{{ brand.name }} </a></li>
+                      {% endif %}
+                    {% endif %}
+                  {% endfor %}
                 </div>
               </div>
 
@@ -21,6 +32,17 @@
                 <div class="img-container" style="background-image: url({{ product.img }})"></div>
                 <div class="text-block text-left">
                   <h4 class="superpose-img">{{ product.name }}</h4>
+                  {% for brand in product.brands.all %}
+                    {% if product.brands.all|length_is:"1" %}
+                      <li class="list-inline-item"><a href="">{{ brand.name }} </a></li>
+                    {% else %}
+                      {% if forloop.counter < product.brands.all|length %}
+                        <li class="list-inline-item"><a href="">{{ brand.name }}, </a></li>
+                      {% else %}
+                        <li class="list-inline-item"><a href="">{{ brand.name }} </a></li>
+                      {% endif %}
+                    {% endif %}
+                  {% endfor %}
                 </div>
               </div>
             {% endif %}

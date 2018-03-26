@@ -337,6 +337,25 @@ caption {
   background-color: #212529;
 }
 
+.page-title {
+  padding:5% 0 0 0;
+}
+
+.vmiddle{
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.vbottom{
+  position: relative;
+  top: 100%;
+  transform: translateY(-100%);
+}
+
+
+/* PRODUCTS */
+
 .img-container{
   height:400px;
   background-repeat: no-repeat;
@@ -348,9 +367,21 @@ caption {
   width: 100%;
 }
 
-.text-justify {
-  text-align: justify;
+.text-block {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(0,0,0,0.7);
+    color: white;
+    padding: 20px;
 }
+
+.nutri-grade {
+  font-size: 1.8rem;
+}
+
+/* PAGINATION ITEMS */
 
 .pagination {
     display: table;
@@ -366,24 +397,159 @@ caption {
     text-align: center;
 }
 
-#better-product, #product-detail{
+
+/* USER REGISTRATION & LOGIN */
+
+.main-center{
+  margin: auto;
+  max-width: 600px;
+  padding: 30px 100px;
+  background:#de9440;
+  color: #FFF;
+  text-shadow: none;
+  -webkit-box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.31);
+  -moz-box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.31);
+  box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.31);
+
+}
+
+.input-group {
+    -webkit-box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.21)!important;
+    -moz-box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.21)!important;
+    box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.21)!important;
+}
+
+label {
+  margin: 0;
+}
+
+
+
+/* USER PROFILE PAGE */
+ .card {
+    margin-top: 20px;
+    padding: 30px;
+    background-color: rgba(214, 224, 226, 0.2);
+    -webkit-border-top-left-radius:5px;
+    -moz-border-top-left-radius:5px;
+    border-top-left-radius:5px;
+    -webkit-border-top-right-radius:5px;
+    -moz-border-top-right-radius:5px;
+    border-top-right-radius:5px;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+.card.hovercard {
+    position: relative;
+    padding-top: 0;
+    overflow: hidden;
+    text-align: center;
+    background-color: #fff;
+    background-color: rgba(255, 255, 255, 1);
+}
+.card.hovercard .card-background {
+    height: 300px;
+}
+
+.card.hovercard .card-background-favorites {
+    height: 120px;
+}
+
+.card-background img, .card-background-favorites img {
+    -webkit-filter: blur(25px);
+    -moz-filter: blur(25px);
+    -o-filter: blur(25px);
+    -ms-filter: blur(25px);
+    filter: blur(25px);
+    margin-left: -100px;
+    margin-top: -200px;
+    min-width: 130%;
+}
+.card.hovercard .useravatar {
+    position: absolute;
+    top: 150px;
+    left: 0;
+    right: 0;
+}
+.welcome-msg-box {
+    position: absolute;
+    top: 30px;
+    left: 0;
+    right: 0;
+}
+.welcome-msg {
+  font-size: 4rem;
+  font-weight: bold;
+  color: #e8a75d;
+}
+.card.hovercard .useravatar img {
+    width: 100px;
+    height: 100px;
+    max-width: 100px;
+    max-height: 100px;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    border-radius: 50%;
+    border: 5px solid rgba(255, 255, 255, 0.5);
+}
+.card.hovercard .card-info {
+    position: absolute;
+    bottom: 45px;
+    left: 0;
+    right: 0;
+}
+.card.hovercard .card-info .card-title {
+    padding:0 5px;
+    font-size: 20px;
+    line-height: 1;
+    color: #86ebe6;
+    background-color: rgba(255, 255, 255, 0.1);
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+}
+.card.hovercard .card-info {
+    overflow: hidden;
+    font-size: 12px;
+    line-height: 20px;
+    color: #737373;
+    text-overflow: ellipsis;
+}
+.card.hovercard .bottom {
+    padding: 0 20px;
+    margin-bottom: 17px;
+}
+.btn-pref .btn {
+    -webkit-border-radius:0 !important;
+}
+
+
+/* FAVORITES */
+.add-fav {
+  color: #c45525;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+/* MISC */
+.section-pad{
   padding: 2% 0;
 }
 
-.contain{
-  position: relative;
-}
-
-.text-block {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background-color: rgba(0,0,0,0.7);
-    color: white;
-    padding: 20px;
-}
-
 .list-inline {
-  margin:0;
+  margin: 0;
+}
+
+.text-justify {
+  text-align: justify;
 }

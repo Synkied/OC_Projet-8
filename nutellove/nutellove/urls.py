@@ -17,8 +17,11 @@ from django.conf import settings
 from django.conf.urls import include, url
 from django.contrib import admin
 from django.urls import path
-from products import views as product_views
 from django.views.generic import TemplateView
+from django.contrib.auth import views as auth_views
+
+from products import views as product_views
+from . import views
 
 urlpatterns = [
     path('', TemplateView.as_view(template_name="index.html"), name="index"),  # homepage
@@ -26,6 +29,11 @@ urlpatterns = [
     path('legals/', TemplateView.as_view(template_name="legals.html"), name="legals"),
     path('admin/', admin.site.urls),
     path('search/', product_views.Search.as_view(), name='search'),
+    path('register/', views.UserFormView.as_view(), name='register'),
+    path('login/', auth_views.login, name='login'),
+    path('logout/', auth_views.logout, {'next_page': '/'}, name='logout'),
+    path('account/', views.UserAccountView.as_view(), name='account'),
+    path('favorites/', views.UserFavoritesView.as_view(), name='favorites'),
 ]
 
 

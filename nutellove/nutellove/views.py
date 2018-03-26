@@ -1,25 +1,74 @@
-# from django.http import HttpResponse
-# from django.shortcuts import render
-# from .models import Brand, Category, Product, Favorite
+from django.shortcuts import render, redirect
+from django.contrib.auth import authenticate, login
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.views.generic import View
+from .forms import UserForm
 
 
-# def search(request):
-#     query = request.GET.get('query')
-#     if not query:
-#         products = Product.objects.all()
+class UserFormView(View):
+    form_class = UserForm
+    template_name = 'registration_form.html'
 
-#     else:
-#         # title contains the query and query is not sensitive to case.
-#         products = Product.objects.filter(name__icontains=query)
+    # display blank form
+    def get(self, request):
+        # initiate a form without data (None)
+        form = self.form_class(None)
+        context = {
+            'form': form,
+        }
+        return render(request, self.template_name, context)
 
-#     if not products.exists():
-#         message = "Misère de misère, nous n'avons trouvé aucun résultat !"
+    # process data form
+    def post(self, request):
+        form = self.form_class(request.POST)
+        context = {
+            'form': form,
+        }
 
-#     else:
-#         products = ["<li>{}</li>".format(product.name) for product in products]
-#         message = """
-#             Nous avons trouvé les produits correspondant à votre requête ! Les voici :
-#             <ul>{}</ul>
-#         """.format("".join(products))
+        if form.is_valid():
+            # raw data
+            user = form.save(commit=False)
 
-#     return HttpResponse(message)
+            # clean (normalized) data
+            username = form.cleaned_data.get('username')
+            raw_password = form.cleaned_data.get('password1')
+
+            user.set_password(raw_password)
+            user.save()
+
+            # returns User object if credentials are correct
+            user = authenticate(username=username, password=raw_password)
+
+            if user is not None:
+                # check if user is active
+                if user.is_active:
+                    login(request, user)
+                    return redirect('index')
+
+        # else: try again
+        return render(request, self.template_name, context)
+
+
+class UserAccountView(LoginRequiredMixin, View):
+    template_name = 'account.html'
+
+    def get(self, request):
+        # get the current logged in user
+        current_user = request.user
+
+        context = {
+            'user': current_user,
+        }
+
+        return render(request, self.template_name, context)
+
+
+class UserFavoritesView(LoginRequiredMixin, View):
+    template_name = 'favorites.html'
+
+    def get(self, request):
+        context = {
+
+        }
+
+        return render(request, self.template_name)
