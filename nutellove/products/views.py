@@ -1,6 +1,6 @@
 from django.contrib import auth
 from django.http import HttpResponse
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from .models import Brand, Category, Product, Favorite
 from .controllers import view_pagination, page_indexing
 from django.utils.translation import gettext
@@ -139,15 +139,19 @@ class Search(View):
 class FavoriteView(View):
     # pass the model in path args in urls.py
     model = None
+    template_name = 'index.html'
 
-    def post(self, request, pk):
+    def get(self, request, product_id):
+
         # Get the user if connected
         user = auth.get_user(request)
         # Trying to get a bookmark from the table, or create a new one
-        favorite, created = self.model.objects.get_or_create(substitute=pk, user=user)
+        product = Product.objects.get(pk=product_id)
+        favorite, created = self.model.objects.get_or_create(substitute=product, user=user)
+
         # If no new bookmark has been created,
         # Then we believe that the request was to delete the bookmark
         if not created:
             favorite.delete()
 
-        return render(request, 'index.html')
+        return render(request, self.template_name)

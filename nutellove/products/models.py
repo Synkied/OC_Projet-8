@@ -66,6 +66,3 @@ class Favorite(models.Model):
         on_delete=models.CASCADE,
         default=0,
     )
-
-    def __str__(self):
-        return self.name

@@ -1,8 +1,10 @@
+from django.contrib import auth
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import View
 from .forms import UserForm
+from products.models import Brand, Category, Product, Favorite
 
 
 class UserFormView(View):
@@ -67,8 +69,12 @@ class UserFavoritesView(LoginRequiredMixin, View):
     template_name = 'products/favorites.html'
 
     def get(self, request):
-        context = {
 
+        user = auth.get_user(request)
+        favorites = Favorite.objects.filter(user=user)
+
+        context = {
+            'favorites': favorites
         }
 
-        return render(request, self.template_name)
+        return render(request, self.template_name, context)
