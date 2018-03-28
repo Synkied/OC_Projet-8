@@ -14,8 +14,10 @@
     {% include 'shared/search_form.html' %}
 
   {% elif not query %}
-    
-    {% include 'products/shared/list_of_products.html'%}
+    <section>
+      {% include 'shared/search_form.html' %}
+      {% include 'products/shared/list_of_products.html'%}
+    </section>
 
   {% else %}
 

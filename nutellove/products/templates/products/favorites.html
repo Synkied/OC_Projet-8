@@ -33,48 +33,59 @@
 
           <div role="tabpanel" class="tab-pane active" id="currentPreferences">
             <ul class="list-group media-list media-list-stream">
+
+              <div class="row">
               {% for favorite in favorites %}
+              
                 <div class="col-xl-4 col-lg-4 col-md-4 col-xs-1 text-center border">
-      <div class="container vbottom p-3">
-        <a href="{% url 'products:product_detail' product_id=favorite.substitute.id %}">
-          {% if favorite.substitute.img_small is none %}
-            <img class="img-responsive" src="{% static 'img/logo_pur_beurre.png' %}" alt="{{ favorite.substitute.name }}">
-          {% else %}
-            <img class="img-responsive" src="{{ favorite.substitute.img_small }}" alt="{{ favorite.substitute.name }}">
-          {% endif %}
-        </a>
 
-        <!-- display the name of the product -->
-        <h3><a href="{% url 'products:product_detail' product_id=favorite.substitute.id %}">{{ favorite.substitute.name }}</a></h3>
+                  <div class="container vbottom p-3">
+                    <a href="{% url 'products:product_detail' product_id=favorite.substitute.id %}">
+                      {% if favorite.substitute.img_small is none %}
+                        <img class="img-responsive" src="{% static 'img/logo_pur_beurre.png' %}" alt="{{ favorite.substitute.name }}">
+                      {% else %}
+                        <img class="img-responsive" src="{{ favorite.substitute.img_small }}" alt="{{ favorite.substitute.name }}">
+                      {% endif %}
+                    </a>
 
-        <!-- display brands for each product, with a comma or not depending on brand index -->
-        <ul class="list-inline">
-          {% for brand in favorite.substitute.brands.all %}
-            {% if favorite.substitute.brands.all|length_is:"1" %}
-              <li class="list-inline-item"><a href="">{{ brand.name }} </a></li>
-            {% else %}
-              {% if forloop.counter < favorite.substitute.brands.all|length %}
-                <li class="list-inline-item"><a href="">{{ brand.name }}, </a></li>
-              {% else %}
-                <li class="list-inline-item"><a href="">{{ brand.name }} </a></li>
-              {% endif %}
-            {% endif %}
-          {% endfor %}
-        </ul>
-        <!-- !!end display brands for each product -->
+                    <!-- display the name of the product -->
+                    <h3><a href="{% url 'products:product_detail' product_id=favorite.substitute.id %}">{{ favorite.substitute.name }}</a></h3>
 
-        <p class="nutri-grade"><span class="badge badge-primary">{{ favorite.substitute.nutri_grade }}</span></p>
-        <div class="favs">
-          <!-- pass product_id to the url, to use it in the view and push it to db -->
-          <a class="add-fav" href="{% url 'products:bookmark' product_id=favorite.substitute.id %}">
-            {% blocktrans %}Ajouter aux favoris{% endblocktrans %}
-            <i class="fa fa-heart"></i>
-          </a>
-        </div>
-      </div>
+                    <!-- display brands for each product, with a comma or not depending on brand index -->
+                    <ul class="list-inline">
+                      {% for brand in favorite.substitute.brands.all %}
+                        {% if favorite.substitute.brands.all|length_is:"1" %}
+                          <li class="list-inline-item"><a href="">{{ brand.name }} </a></li>
+                        {% else %}
+                          {% if forloop.counter < favorite.substitute.brands.all|length %}
+                            <li class="list-inline-item"><a href="">{{ brand.name }}, </a></li>
+                          {% else %}
+                            <li class="list-inline-item"><a href="">{{ brand.name }} </a></li>
+                          {% endif %}
+                        {% endif %}
+                      {% endfor %}
+                    </ul>
+                    <!-- !!end display brands for each product -->
 
-    </div>
+                    <p class="nutri-grade"><span class="badge badge-primary">{{ favorite.substitute.nutri_grade }}</span></p>
+                    <div class="favs">
+                      <!-- pass product_id to the url, to use it in the view and push it to db -->
+                      <form action="{% url 'products:bookmark' product_id=favorite.substitute.id %}" method="post">
+                        {% csrf_token %}
+                        <button type="submit" class="remove-fav" value="{{ favorite.substitute.id }}">
+                          {% blocktrans %}Retirer des favoris{% endblocktrans %}
+                          <i class="fa fa-minus-square"></i>
+                        </button>
+                      </form>
+                    </div>
+                  </div>
+
+                </div>
+
               {% endfor %}
+              </div>
+
+
             </ul>
           </div>
 

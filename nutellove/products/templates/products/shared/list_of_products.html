@@ -4,6 +4,12 @@
 {% load i18n %}
 
 
+<h2 class="text-center mb-5 page-title">
+  {% comment %}Translators: No product found{% endcomment %}
+  {% blocktrans %} {{ list_title }} {% endblocktrans %}
+  <hr>
+</h2>
+
 <div class="row">
   {% for product in products %}
   <!-- display infos about product -->
@@ -37,13 +43,32 @@
         <!-- !!end display brands for each product -->
 
         <p class="nutri-grade"><span class="badge badge-primary">{{ product.nutri_grade }}</span></p>
+
+        {% if not product.is_favorite %}
         <div class="favs">
           <!-- pass product_id to the url, to use it in the view and push it to db -->
-          <a class="add-fav" href="{% url 'products:bookmark' product_id=product.id %}">
-            {% blocktrans %}Ajouter aux favoris{% endblocktrans %}
-            <i class="fa fa-heart"></i>
-          </a>
+          <form action="{% url 'products:bookmark' product_id=product.id %}?next={{request.path}}" method="post">
+            {% csrf_token %}
+            <button type="submit" class="add-fav" value="{{ product.id }}">
+              {% blocktrans %}Ajouter aux favoris{% endblocktrans %}
+              <i class="fa fa-heart"></i>
+            </button>
+          </form>
         </div>
+
+        {% else %}
+        <div class="favs">
+          <!-- pass product_id to the url, to use it in the view and push it to db -->
+          <form action="{% url 'products:bookmark' product_id=product.id %}?next={{request.path}}" method="post">
+            {% csrf_token %}
+            <button type="submit" class="remove-fav" value="{{ product.id }}">
+              {% blocktrans %}Retirer des favoris{% endblocktrans %}
+              <i class="fa fa-minus-square"></i>
+            </button>
+          </form>
+        </div>
+        {% endif %}
+
       </div>
 
     </div>

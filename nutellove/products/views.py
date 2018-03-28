@@ -1,5 +1,7 @@
 from django.contrib import auth
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
+from django.urls import reverse
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import Brand, Category, Product, Favorite
 from .controllers import view_pagination, page_indexing
@@ -71,7 +73,8 @@ class Search(View):
         Used to handle queries from user and perform a search
         """
         query = request.GET.get('query')
-        # page = request.GET.get('page')
+
+        user = auth.get_user(request)
 
         if not query:
             products_list = Product.objects.filter()
@@ -124,6 +127,14 @@ class Search(View):
 
             title = ""
 
+        # check if user is not anonymous
+        if user.username != "":
+            for product in products:
+                if Favorite.objects.filter(substitute=product, user=user).exists():
+                    product.is_favorite = True
+                else:
+                    product.is_favorite = False
+
         context = {
             'chosen_product': chosen_product,
             'products': products,
@@ -136,16 +147,18 @@ class Search(View):
         return render(request, self.template_name, context)
 
 
-class FavoriteView(View):
+class FavoriteView(LoginRequiredMixin, View):
     # pass the model in path args in urls.py
+    # e.g: FavoriteView.as_view(model=Favorite)
     model = None
     template_name = 'index.html'
 
-    def get(self, request, product_id):
+    def post(self, request, product_id):
 
         # Get the user if connected
         user = auth.get_user(request)
-        # Trying to get a bookmark from the table, or create a new one
+
+        # Trying to get a favorite from the database, or create a new one
         product = Product.objects.get(pk=product_id)
         favorite, created = self.model.objects.get_or_create(substitute=product, user=user)
 
@@ -154,4 +167,5 @@ class FavoriteView(View):
         if not created:
             favorite.delete()
 
-        return render(request, self.template_name)
+        # return the same/previous page, or the index if fail
+        return HttpResponseRedirect(request.META.get('HTTP_REFERER', ''))
