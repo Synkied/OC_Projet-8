@@ -153,7 +153,7 @@ class FavoriteView(LoginRequiredMixin, View):
     model = None
     template_name = 'products/favorites.html'
 
-    def get(self, request):
+    def get(self, request, product_id=None):
 
         user = auth.get_user(request)
         favorites = Favorite.objects.filter(user=user)

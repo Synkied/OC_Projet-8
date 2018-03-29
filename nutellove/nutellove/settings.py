@@ -128,8 +128,10 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+# where the user can log in
+LOGIN_URL = 'users:login'
 
-LOGIN_URL = 'login'
+# where the user is sent to when logged in
 LOGIN_REDIRECT_URL = 'index'
 
 # Internationalization
@@ -164,7 +166,9 @@ if os.environ.get('ENV') == 'PRODUCTION':
     DATABASES['default'].update(db_from_env)
     # Simplified static file serving.
     # https://warehouse.python.org/project/whitenoise/
-    STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+    STATICFILES_STORAGE = (
+        'whitenoise.storage.CompressedManifestStaticFilesStorage'
+    )
     # Static files settings
     PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
 

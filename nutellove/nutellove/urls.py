@@ -26,6 +26,7 @@ from . import views
 urlpatterns = [
     # homepage
     path('', TemplateView.as_view(template_name="index.html"), name="index"),
+    path('users/', include('users.urls', namespace="users")),
     path('products/', include('products.urls', namespace="products")),
     path(
         'legals/',
@@ -33,10 +34,6 @@ urlpatterns = [
         name="legals"),
     path('admin/', admin.site.urls),
     path('search/', product_views.Search.as_view(), name='search'),
-    path('register/', views.UserFormView.as_view(), name='register'),
-    path('login/', auth_views.login, name='login'),
-    path('logout/', auth_views.logout, {'next_page': '/'}, name='logout'),
-    path('account/', views.UserAccountView.as_view(), name='account'),
     # path('favorites/', views.UserFavoritesView.as_view(), name='favorites'),
 ]
 
