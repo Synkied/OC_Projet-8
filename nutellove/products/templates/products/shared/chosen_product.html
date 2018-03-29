@@ -25,7 +25,19 @@
                     {% endif %}
                   {% endfor %}
                 </ul>
-                <p>Nutriscore : <span class="badge badge-primary">{{ chosen_product.nutri_grade }}</span></p>
+
+                {% if chosen_product.nutri_grade == "a" %}
+                  <p>Nutriscore : <span class="badge badge-success">{{ chosen_product.nutri_grade }}</span></p>
+                {% elif chosen_product.nutri_grade == "b" %}
+                  <p>Nutriscore : <span class="badge badge-info">{{ chosen_product.nutri_grade }}</span></p>
+                {% elif chosen_product.nutri_grade == "c" %}
+                  <p>Nutriscore : <span class="badge badge-primary">{{ chosen_product.nutri_grade }}</span></p>
+                {% elif chosen_product.nutri_grade == "d" %}
+                  <p>Nutriscore : <span class="badge badge-warning">{{ chosen_product.nutri_grade }}</span></p>
+                {% elif chosen_product.nutri_grade == "e" %}
+                  <p>Nutriscore : <span class="badge badge-danger">{{ chosen_product.nutri_grade }}</span></p>
+                {% endif %}
+
               </div>
             </div>
 
@@ -47,7 +59,19 @@
                     {% endif %}
                   {% endfor %}
                 </ul>
-                <p>Nutriscore : <span class="badge badge-primary">{{ chosen_product.nutri_grade }}</span></p>
+
+                {% if chosen_product.nutri_grade == "a" %}
+                  <p>Nutriscore : <span class="badge badge-success">{{ chosen_product.nutri_grade }}</span></p>
+                {% elif chosen_product.nutri_grade == "b" %}
+                  <p>Nutriscore : <span class="badge badge-info">{{ chosen_product.nutri_grade }}</span></p>
+                {% elif chosen_product.nutri_grade == "c" %}
+                  <p>Nutriscore : <span class="badge badge-primary">{{ chosen_product.nutri_grade }}</span></p>
+                {% elif chosen_product.nutri_grade == "d" %}
+                  <p>Nutriscore : <span class="badge badge-warning">{{ chosen_product.nutri_grade }}</span></p>
+                {% elif chosen_product.nutri_grade == "e" %}
+                  <p>Nutriscore : <span class="badge badge-danger">{{ chosen_product.nutri_grade }}</span></p>
+                {% endif %}
+
               </div>
             </div>
           {% endif %}

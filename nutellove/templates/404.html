@@ -4,8 +4,10 @@
 {% block body %}
 <link href="{% static 'css/404.css' %}" rel="stylesheet">
 
-<div class="error-container">
-    <h1>404 - Not Found</h1>
-    <p class="return">Je veux retourner sur la <a href="/">page d'accueil</a></p>
-</div>
+<section>
+    <div class="error-container">
+        <h1>404 - Not Found</h1>
+        <p class="return">{% blocktrans %}Je veux retourner sur la <a href="/">page d'accueil{% endblocktrans %}</a></p>
+    </div>
+</section>
 {% endblock %}

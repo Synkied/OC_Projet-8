@@ -106,13 +106,13 @@ class Search(View):
                         if product.nutri_grade < chosen_product.nutri_grade
                     ]
 
-                # comment to display pagination
-                # products = better_products[:6]
+                # !!!! comment to display pagination
+                products = better_products[:8]
+                page_range = None
 
-                # uncomment to display pagination
-                products = view_pagination(request, 6, better_products)
-
-                page_range = page_indexing(products, 10)
+                # !!!! uncomment to display pagination
+                # products = view_pagination(request, 8, better_products)
+                # page_range = page_indexing(products, 10)
 
             else:
                 chosen_product = None
@@ -151,7 +151,18 @@ class FavoriteView(LoginRequiredMixin, View):
     # pass the model in path args in urls.py
     # e.g: FavoriteView.as_view(model=Favorite)
     model = None
-    template_name = 'index.html'
+    template_name = 'products/favorites.html'
+
+    def get(self, request):
+
+        user = auth.get_user(request)
+        favorites = Favorite.objects.filter(user=user)
+
+        context = {
+            'favorites': favorites
+        }
+
+        return render(request, self.template_name, context)
 
     def post(self, request, product_id):
 

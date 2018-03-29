@@ -3,17 +3,31 @@
 {% load static %}
 {% load i18n %}
 
-
+{% if list_title %}
 <h2 class="text-center mb-5 page-title">
   {% comment %}Translators: No product found{% endcomment %}
   {% blocktrans %} {{ list_title }} {% endblocktrans %}
   <hr>
 </h2>
+{% endif %}
 
 <div class="row">
   {% for product in products %}
   <!-- display infos about product -->
-    <div class="col-xl-4 col-lg-4 col-md-4 col-xs-1 text-center border">
+    <div class="col-xl-3 col-lg-6 col-md-6 col-xs-1 text-center border">
+    
+    {% if product.nutri_grade == "a" %}
+      <div class="nutri-grade"><span class="badge badge-success">{{ product.nutri_grade }}</span></div>
+    {% elif product.nutri_grade == "b" %}
+      <div class="nutri-grade"><span class="badge badge-info">{{ product.nutri_grade }}</span></div>
+    {% elif product.nutri_grade == "c" %}
+      <div class="nutri-grade"><span class="badge badge-primary">{{ product.nutri_grade }}</span></div>
+    {% elif product.nutri_grade == "d" %}
+      <div class="nutri-grade"><span class="badge badge-warning">{{ product.nutri_grade }}</span></div>
+    {% elif product.nutri_grade == "e" %}
+      <div class="nutri-grade"><span class="badge badge-danger">{{ product.nutri_grade }}</span></div>
+    {% endif %}
+
       <div class="container vbottom p-3">
         <a href="{% url 'products:product_detail' product_id=product.id %}">
           {% if product.img_small is none %}
@@ -42,14 +56,14 @@
         </ul>
         <!-- !!end display brands for each product -->
 
-        <p class="nutri-grade"><span class="badge badge-primary">{{ product.nutri_grade }}</span></p>
+        
 
         {% if not product.is_favorite %}
-        <div class="favs">
+        <div class="favs mt-2">
           <!-- pass product_id to the url, to use it in the view and push it to db -->
           <form action="{% url 'products:bookmark' product_id=product.id %}?next={{request.path}}" method="post">
             {% csrf_token %}
-            <button type="submit" class="add-fav" value="{{ product.id }}">
+            <button type="submit" class="btn btn-danger" value="{{ product.id }}">
               {% blocktrans %}Ajouter aux favoris{% endblocktrans %}
               <i class="fa fa-heart"></i>
             </button>
@@ -57,11 +71,11 @@
         </div>
 
         {% else %}
-        <div class="favs">
+        <div class="favs mt-2">
           <!-- pass product_id to the url, to use it in the view and push it to db -->
           <form action="{% url 'products:bookmark' product_id=product.id %}?next={{request.path}}" method="post">
             {% csrf_token %}
-            <button type="submit" class="remove-fav" value="{{ product.id }}">
+            <button type="submit" class="btn btn-secondary" value="{{ product.id }}">
               {% blocktrans %}Retirer des favoris{% endblocktrans %}
               <i class="fa fa-minus-square"></i>
             </button>

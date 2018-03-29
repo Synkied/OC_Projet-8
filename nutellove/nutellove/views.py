@@ -1,4 +1,3 @@
-from django.contrib import auth
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -65,16 +64,3 @@ class UserAccountView(LoginRequiredMixin, View):
         return render(request, self.template_name, context)
 
 
-class UserFavoritesView(LoginRequiredMixin, View):
-    template_name = 'products/favorites.html'
-
-    def get(self, request):
-
-        user = auth.get_user(request)
-        favorites = Favorite.objects.filter(user=user)
-
-        context = {
-            'favorites': favorites
-        }
-
-        return render(request, self.template_name, context)

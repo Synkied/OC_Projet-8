@@ -18,6 +18,7 @@
               <h1 class="text-uppercase welcome-msg">Ahoy !</h1>
             </div>
             <div class="useravatar">
+              <!-- user img not implemented yet, need to update models and add a form to use an img -->
                 <img alt="" src="{% if user.image %}{% url '' %}{% else %} {% static 'img/default_user_100x100.png' %} {% endif %}">
             </div>
             <div class="card-info"> <span class="card-title">{{ user.username }}</span>
@@ -26,7 +27,7 @@
 
         <div class="btn-pref btn-group btn-group-justified btn-group-lg" role="group" aria-label="...">
           <div class="btn-group" role="group">
-            <a id="favorites" class="btn btn-primary" href="{% url 'favorites' %}"><span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+            <a id="favorites" class="btn btn-primary" href="{% url 'products:favorites' %}"><span class="glyphicon glyphicon-star" aria-hidden="true"></span>
                 <div class="hidden-xs">{% blocktrans %}Mes favoris{% endblocktrans %}</div>
             </a>
           </div>

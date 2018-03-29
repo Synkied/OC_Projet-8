@@ -14,7 +14,7 @@
         </li>
         <!-- if user is auth then show favorites page, else go to registration -->
         <li class="nav-item">
-          <a class="nav-link js-scroll-trigger" href="{% if user.is_authenticated %} {% url 'favorites' %} {% else %}{% url 'register' %}{% endif %}"><img height="35px" src="{% static 'img/carrot.svg' %}" alt="Mes aliments"></a>
+          <a class="nav-link js-scroll-trigger" href="{% if user.is_authenticated %} {% url 'products:favorites' %} {% else %}{% url 'login' %}{% endif %}"><img height="35px" src="{% static 'img/carrot.svg' %}" alt="Mes aliments"></a>
         </li>
         <!-- if user is auth then disconnect user, else do nothing -->
         <li class="nav-item">

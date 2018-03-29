@@ -13,5 +13,7 @@ urlpatterns = [
     path('<int:product_id>', views.product_detail, name='product_detail'),
     # what to display for url products/search/?query=<query>
     path('search/', views.Search.as_view(), name='search'),
-    path('bookmark/<int:product_id>', views.FavoriteView.as_view(model=Favorite), name="bookmark")
+    # use a custom link to boorkmark products
+    path('bookmark/<int:product_id>', views.FavoriteView.as_view(model=Favorite), name="bookmark"),
+    path('favorites/', views.FavoriteView.as_view(model=Favorite), name="favorites")
 ]

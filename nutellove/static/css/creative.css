@@ -377,9 +377,21 @@ caption {
     padding: 20px;
 }
 
-.nutri-grade {
-  font-size: 1.8rem;
+.nutri-grade{
+  font-size: 3rem;
+  position: absolute;
+  top: 25%;
+  left: 85%;
+  transform: translate(-25%, -85%);
+  padding: 20px;
+  border-radius: 0;
 }
+
+.nutri-grade .badge {
+  border-radius: 0;
+}
+
+
 
 /* PAGINATION ITEMS */
 
@@ -523,21 +535,6 @@ label {
 .btn-pref .btn {
     -webkit-border-radius:0 !important;
 }
-
-
-/* FAVORITES */
-.add-fav {
-  color: #c45525;
-}
-
-.remove-fav {
-  color: #000;
-}
-
-
-
-
-
 
 
 
