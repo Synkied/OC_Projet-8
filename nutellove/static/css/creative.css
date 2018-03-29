@@ -171,6 +171,10 @@ img::-moz-selection {
   }
 }
 
+.nav-container {
+  max-width: 100%;
+}
+
 header.masthead {
   padding-top: 10rem;
   padding-bottom: calc(10rem - 56px);
@@ -180,6 +184,7 @@ header.masthead {
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover;
+
 }
 
 header.masthead hr {
@@ -333,7 +338,7 @@ caption {
   color: #c45525;
 }
 
-.primary-title {
+.primary-title, .secondary-title {
   background-color: #212529;
 }
 
@@ -451,6 +456,8 @@ label {
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     box-sizing: border-box;
+    border: 0;
+    border-radius: 0;
 }
 .card.hovercard {
     position: relative;
@@ -465,7 +472,7 @@ label {
 }
 
 .card.hovercard .card-background-favorites {
-    height: 120px;
+    height: 200px;
 }
 
 .card-background img, .card-background-favorites img {
@@ -484,16 +491,25 @@ label {
     left: 0;
     right: 0;
 }
-.welcome-msg-box {
+.account-msg-box {
     position: absolute;
     top: 30px;
     left: 0;
     right: 0;
 }
-.welcome-msg {
+.favorite-msg-box {
+  position: absolute;
+  top: 80px;
+  left: 0;
+  right: 0;
+}
+.account-msg, .favorite-msg {
   font-size: 4rem;
   font-weight: bold;
   color: #e8a75d;
+}
+.account-msg-txt, .favorite-msg-txt {
+  color: white;
 }
 .card.hovercard .useravatar img {
     width: 100px;
@@ -553,4 +569,18 @@ label {
 
 .text-justify {
   text-align: justify;
+}
+
+.pagination-pad {
+  padding: 4% 0 0 0;
+}
+
+.btn-search {
+  border-radius: 0;
+}
+
+nav .input-group {
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
 }

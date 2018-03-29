@@ -4,11 +4,6 @@
 {% load i18n %}
 
 <section>
-  <div class="col-lg-12">
-    <h2 class="intro-text text-center">{{ list_title }}
-    </h2>
-    <hr class="detail-separator mb-5">
-  </div>
 
   {% if products|length_is:"0" %}
     <div class="text-center mb-5">
@@ -22,9 +17,5 @@
     
     {% include 'products/shared/list_of_products.html'%}
   {% endif %}
-  
-  <!-- display a page nav if there are many products -->
-  {% if paginate %}
-    {% include 'products/shared/pagination.html' %}
-  {% endif %}
-  <!-- !!end display a page nav if there are many products -->
+
+</section>

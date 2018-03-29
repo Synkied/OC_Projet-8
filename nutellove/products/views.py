@@ -1,10 +1,11 @@
+from random import randint
+
 from django.contrib import auth
 from django.http import HttpResponse, HttpResponseRedirect
 from django.urls import reverse
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import Brand, Category, Product, Favorite
-from .controllers import view_pagination, page_indexing
 from django.utils.translation import gettext
 from django.views import View
 
@@ -15,53 +16,90 @@ def listing(request):
     """
     List all available products on a page
     """
-    products_list = Product.objects.filter()
+    products = Product.objects.filter()[:9]
 
-    products = view_pagination(request, 9, products_list)
     title = gettext("Tous nos produits")
-
-    page_range = page_indexing(products, 10)
 
     context = {
         'products': products,
         'title': title,
-        'paginate': True,
-        'page_range': page_range,
+        'paginate': True
     }
 
     return render(request, 'products/listing.html', context)
 
 
-def product_detail(request, product_id):
+class ProductDetail(View):
+    template_name = 'products/product_details.html'
+
+    def get(self, request, product_id):
+        """
+        Used to display the details of a product
+        """
+        product = get_object_or_404(Product, pk=product_id)
+        category = get_object_or_404(Category, pk=product.cat.id)
+        brands = [brand.name for brand in product.brands.all()]
+        stores = [store.name for store in product.stores.all()]
+
+        context = {
+            'product': product,
+            'brands': brands,
+            'stores': stores,
+            'category': category,
+        }
+
+        return render(request, self.template_name, context)
+
+
+class BrandCategoryDetail(View):
     """
-    Used to display the details of a product
+    Abstract class to display categories and details
     """
-    product = get_object_or_404(Product, pk=product_id)
-    category = get_object_or_404(Category, pk=product.cat.id)
-    brands = [brand.name for brand in product.brands.all()]
-    stores = [store.name for store in product.stores.all()]
+    obj = None
+    model = None
+    template_name = 'products/category_or_brand_details.html'
 
-    context = {
-        'product': product,
-        'brands': brands,
-        'stores': stores,
-        'category': category.name,
-    }
+    def get(self, request, **kwargs):
+        """
+        Used to give details of a brand
+        """
+        obj_id = kwargs.get('obj_id')
 
-    return render(request, 'products/product_details.html', context)
+        if obj_id is None:
+            objs = self.model.objects.all().order_by('name')
 
+            if self.model == Brand:
+                title = "Toutes les marques"
+            elif self.model == Category:
+                title = "Toutes les catégories"
 
-def brand_detail(request, brand_id):
-    """
-    Used to give details of a brand
-    """
-    brand = get_object_or_404(Brand, pk=brand_id)
+            context = {
+                'objs': objs,
+                'title': title,
+                'model': self.model.__name__,
+            }
 
-    context = {
-        'brand': brand
-    }
+            return render(request, self.template_name, context)
 
-    return render(request, 'products/brand_details.html', context)
+        else:
+            # get the object with the obj_id passed in the url
+            obj = get_object_or_404(self.model, pk=obj_id)
+
+            # conditionnals for text, can be updated I guess
+            if self.model == Brand:
+                products = Product.objects.filter(brands=obj.id)[:9]
+                title = "Produits de la marque {}".format(obj.name)
+            elif self.model == Category:
+                products = Product.objects.filter(cat=obj.id)[:9]
+                title = "Produits de la catégorie {}".format(obj.name)
+
+            context = {
+                'obj': obj,
+                'title': title,
+                'products': products,
+            }
+
+            return render(request, self.template_name, context)
 
 
 class Search(View):
@@ -77,47 +115,41 @@ class Search(View):
         user = auth.get_user(request)
 
         if not query:
-            products_list = Product.objects.filter()
 
-            products = view_pagination(request, 6, products_list)
-
-            page_range = page_indexing(products, 10)
+            # display random products with imgs
+            products = (Product.objects.filter(
+                nutri_grade="a").exclude(
+                    img__isnull=True).exclude(
+                    name__icontains="frite").exclude(
+                    name__icontains="frie").order_by('?')
+            )[:9]
 
             title = gettext("Suggestion de produits")
 
             chosen_product = None
-            page_range = None
 
         else:
             # title contains the query and query is not sensitive to case.
-            products_list = Product.objects.filter(name__icontains=query)
+            products = Product.objects.filter(name__icontains=query)
 
-            if len(products_list) > 0:
-                chosen_product = products_list[0]
+            if len(products) > 0:
+                chosen_product = products[0]
 
                 if chosen_product.nutri_grade == "a":
                     better_products = [
-                        product for product in products_list
+                        product for product in products
                         if product.nutri_grade == chosen_product.nutri_grade
                     ]
                 else:
                     better_products = [
-                        product for product in products_list
+                        product for product in products
                         if product.nutri_grade < chosen_product.nutri_grade
                     ]
 
-                # !!!! comment to display pagination
-                products = better_products[:8]
-                page_range = None
-
-                # !!!! uncomment to display pagination
-                # products = view_pagination(request, 8, better_products)
-                # page_range = page_indexing(products, 10)
+                products = better_products[:6]
 
             else:
                 chosen_product = None
-                page_range = None
-                products = products_list
 
             # title = gettext(
             #     "Résultats pour la requête {}".format(
@@ -139,9 +171,7 @@ class Search(View):
             'chosen_product': chosen_product,
             'products': products,
             'title': title,
-            'paginate': True,
             'query': query,
-            'page_range': page_range,
         }
 
         return render(request, self.template_name, context)
@@ -162,7 +192,14 @@ class FavoriteView(LoginRequiredMixin, View):
             'favorites': favorites
         }
 
-        return render(request, self.template_name, context)
+        # get next url
+        next_url = request.GET.get('next')
+
+        # redirect to next url
+        if next_url:
+            return HttpResponseRedirect(next_url)
+        else:
+            return render(request, self.template_name, context)
 
     def post(self, request, product_id):
 
@@ -178,5 +215,4 @@ class FavoriteView(LoginRequiredMixin, View):
         if not created:
             favorite.delete()
 
-        # return the same/previous page, or the index if fail
-        return HttpResponseRedirect(request.META.get('HTTP_REFERER', ''))
+        return HttpResponseRedirect(request.META.get('HTTP_REFERER'))

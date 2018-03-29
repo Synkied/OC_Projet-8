@@ -1,17 +1,44 @@
 {% extends 'base.html' %}
+{% load static %}
+{% load i18n %}
 
 {% block body %}
 
-    <section class="bg-primary" id="about">
+    <section class="bg-dark" id="about">
       <div class="container">
         <div class="row">
           <div class="col-lg-12 mx-auto text-center">
-            <h2 class="section-heading text-white">Merci à ces gens</h2>
+            <h2 class="section-heading text-white">Mentions légales</h2>
             <hr class="light my-4">
             <div class="row">
             </div>
-            <p class="text-faded mb-4">Merci à ces gens :</p>
-            <a class="btn btn-light btn-xl js-scroll-trigger" href="#services">Get Started!</a>
+            <p class="text-faded mb-4">Crédits :</p>
+            <ul class="list-unstyled text-white">
+              <li>
+                <a href="https://thenounproject.com/FabienJ">Fabien Jouin</a>
+                <p>{% blocktrans %}Pour son icône de carotte{% endblocktrans %} <a href="https://thenounproject.com/term/carrot/29691/"><img height="35px" src="{% static 'img/carrot.svg' %}" alt="Icone de carotte"></a></p>
+              </li>
+              <li>
+                <a href="https://unsplash.com/@olenka_kotyk">Olenka Kotyk</a>
+                <p>{% blocktrans %}Pour l'image de page d'accueil{% endblocktrans %} <a href="https://unsplash.com/photos/eqsEZNCm4-c"><img height="35px" src="{% static 'img/header.jpg' %}" alt="Image de nourriture"></a></p>
+              </li>
+              <li>
+                <a href="https://www.pexels.com/@alexander-dummer-37646">Alexander Dummer</a>
+                <p>{% blocktrans %}Pour l'image de page de compte{% endblocktrans %} <a href="https://www.pexels.com/photo/food-plate-chocolate-dessert-132694/"><img height="35px" src="{% static 'img/account_bg.jpg' %}" alt="Icone de gâteau au chocolat"></a></p>
+              </li>
+              <li>
+                <a href="https://fr.openfoodfacts.org/">OpenFoodFacts</a>
+                <p>{% blocktrans %}Pour l'énorme base de données de produits{% endblocktrans %}</p>
+              </li>
+              <li>
+                <a href="https://fontawesome.com/">FontAwesome</a>
+                <p>{% blocktrans %}Pour les superbes icônes du site{% endblocktrans %}</p>
+              </li>
+              <li>
+                <a href="https://fonts.google.com/">Google Fonts</a>
+                <p>{% blocktrans %}Pour les polices du site{% endblocktrans %}</p>
+              </li>
+            </ul>
           </div>
         </div>
       </div>

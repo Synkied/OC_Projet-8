@@ -11,82 +11,75 @@
 </h2>
 {% endif %}
 
-<div class="row">
-  {% for product in products %}
-  <!-- display infos about product -->
-    <div class="col-xl-3 col-lg-6 col-md-6 col-xs-1 text-center border">
-    
-    {% if product.nutri_grade == "a" %}
-      <div class="nutri-grade"><span class="badge badge-success">{{ product.nutri_grade }}</span></div>
-    {% elif product.nutri_grade == "b" %}
-      <div class="nutri-grade"><span class="badge badge-info">{{ product.nutri_grade }}</span></div>
-    {% elif product.nutri_grade == "c" %}
-      <div class="nutri-grade"><span class="badge badge-primary">{{ product.nutri_grade }}</span></div>
-    {% elif product.nutri_grade == "d" %}
-      <div class="nutri-grade"><span class="badge badge-warning">{{ product.nutri_grade }}</span></div>
-    {% elif product.nutri_grade == "e" %}
-      <div class="nutri-grade"><span class="badge badge-danger">{{ product.nutri_grade }}</span></div>
-    {% endif %}
+<div class="container-fluid">
+  <div class="row">
+    {% for product in products %}
+    <!-- display infos about product -->
+      <div class="col-xl-4 col-lg-6 col-md-6 col-xs-1 text-center border">
+      
+      {% if product.nutri_grade == "a" %}
+        <div class="nutri-grade"><span class="badge badge-success">{{ product.nutri_grade }}</span></div>
+      {% elif product.nutri_grade == "b" %}
+        <div class="nutri-grade"><span class="badge badge-info">{{ product.nutri_grade }}</span></div>
+      {% elif product.nutri_grade == "c" %}
+        <div class="nutri-grade"><span class="badge badge-primary">{{ product.nutri_grade }}</span></div>
+      {% elif product.nutri_grade == "d" %}
+        <div class="nutri-grade"><span class="badge badge-warning">{{ product.nutri_grade }}</span></div>
+      {% elif product.nutri_grade == "e" %}
+        <div class="nutri-grade"><span class="badge badge-danger">{{ product.nutri_grade }}</span></div>
+      {% endif %}
 
-      <div class="container vbottom p-3">
-        <a href="{% url 'products:product_detail' product_id=product.id %}">
-          {% if product.img_small is none %}
-            <img class="img-responsive" src="{% static 'img/logo_pur_beurre.png' %}" alt="{{ product.name }}">
-          {% else %}
-            <img class="img-responsive" src="{{ product.img_small }}" alt="{{ product.name }}">
-          {% endif %}
-        </a>
-
-        <!-- display the name of the product -->
-        <h3><a href="{% url 'products:product_detail' product_id=product.id %}">{{ product.name }}</a></h3>
-
-        <!-- display brands for each product, with a comma or not depending on brand index -->
-        <ul class="list-inline">
-          {% for brand in product.brands.all %}
-            {% if product.brands.all|length_is:"1" %}
-              <li class="list-inline-item"><a href="">{{ brand.name }} </a></li>
+        <div class="container vbottom p-3">
+          <a href="{% url 'products:product_detail' product_id=product.id %}">
+            {% if product.img_small is none %}
+              <img class="img-responsive" src="{% static 'img/logo_pur_beurre.png' %}" alt="{{ product.name }}">
             {% else %}
-              {% if forloop.counter < product.brands.all|length %}
-                <li class="list-inline-item"><a href="">{{ brand.name }}, </a></li>
-              {% else %}
-                <li class="list-inline-item"><a href="">{{ brand.name }} </a></li>
-              {% endif %}
+              <img class="img-responsive" src="{{ product.img_small }}" alt="{{ product.name }}">
             {% endif %}
-          {% endfor %}
-        </ul>
-        <!-- !!end display brands for each product -->
+          </a>
 
-        
+          <!-- display the name of the product -->
+          <h4><a href="{% url 'products:product_detail' product_id=product.id %}">{{ product.name }}</a></h4>
 
-        {% if not product.is_favorite %}
-        <div class="favs mt-2">
-          <!-- pass product_id to the url, to use it in the view and push it to db -->
-          <form action="{% url 'products:bookmark' product_id=product.id %}?next={{request.path}}" method="post">
-            {% csrf_token %}
-            <button type="submit" class="btn btn-danger" value="{{ product.id }}">
-              {% blocktrans %}Ajouter aux favoris{% endblocktrans %}
-              <i class="fa fa-heart"></i>
-            </button>
-          </form>
+          <!-- display brands for each product, with a comma or not depending on brand index -->
+          <ul class="list-inline">
+            {% for brand in product.brands.all %}
+              <!-- Display brands -->
+              {% include 'products/shared/list_brand.html' with product=product %}
+            {% endfor %}
+          </ul>
+          <!-- !!end display brands for each product -->
+
+          {% if not product.is_favorite %}
+          <div class="favs mt-2">
+            <!-- pass product_id to the url, to use it in the view and push it to db -->
+            <form action="{% url 'products:bookmark' product_id=product.id %}?next={{request.path}}" method="post">
+              {% csrf_token %}
+              <button type="submit" class="btn btn-danger" value="{{ product.id }}">
+                {% blocktrans %}Ajouter aux favoris{% endblocktrans %}
+                <i class="fa fa-heart"></i>
+              </button>
+            </form>
+          </div>
+
+          {% else %}
+          <div class="favs mt-2">
+            <!-- pass product_id to the url, to use it in the view and push it to db -->
+            <form action="{% url 'products:bookmark' product_id=product.id %}?next={{request.path}}" method="post">
+              {% csrf_token %}
+              <button type="submit" class="btn btn-secondary" value="{{ product.id }}">
+                {% blocktrans %}Retirer des favoris{% endblocktrans %}
+                <i class="fa fa-minus-square"></i>
+              </button>
+            </form>
+          </div>
+          {% endif %}
+
         </div>
-
-        {% else %}
-        <div class="favs mt-2">
-          <!-- pass product_id to the url, to use it in the view and push it to db -->
-          <form action="{% url 'products:bookmark' product_id=product.id %}?next={{request.path}}" method="post">
-            {% csrf_token %}
-            <button type="submit" class="btn btn-secondary" value="{{ product.id }}">
-              {% blocktrans %}Retirer des favoris{% endblocktrans %}
-              <i class="fa fa-minus-square"></i>
-            </button>
-          </form>
-        </div>
-        {% endif %}
 
       </div>
-
-    </div>
-    {% if forloop.counter|divisibleby:3 %}<div class="clearfix"></div>{% endif %}
-  {% endfor %}
-<!-- !!end display infos about product -->
+      {% if forloop.counter|divisibleby:3 %}<div class="clearfix"></div>{% endif %}
+    {% endfor %}
+  <!-- !!end display infos about product -->
+  </div>
 </div>
