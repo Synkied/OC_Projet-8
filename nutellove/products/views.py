@@ -63,6 +63,7 @@ class BrandCategoryDetail(View):
         """
         Used to give details of a brand
         """
+        user = auth.get_user(request)
         obj_id = kwargs.get('obj_id')
 
         if obj_id is None:
@@ -92,6 +93,14 @@ class BrandCategoryDetail(View):
             elif self.model == Category:
                 products = Product.objects.filter(cat=obj.id)[:9]
                 title = "Produits de la catégorie {}".format(obj.name)
+
+            # check if user is not anonymous
+            if user.username != "":
+                for product in products:
+                    if Favorite.objects.filter(substitute=product, user=user).exists():
+                        product.is_favorite = True
+                    else:
+                        product.is_favorite = False
 
             context = {
                 'obj': obj,
