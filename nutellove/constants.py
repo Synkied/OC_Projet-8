@@ -30,18 +30,10 @@ HEADERS_LIST = [
 ]
 
 CATEGORIES_LIST = [
-    'Petit-déjeuners',
-    'Chips et frites',
-    'Soupes',
+    # 'Petit-déjeuners',
+    # 'Chips et frites',
+    # 'Soupes',
     'Biscuits',
-    'Jus de fruits 100% pur jus',
-    'Jus de pomme',
-    "Jus d'orange 100% pur jus",
-    'Jus de fruits',
-    'Jus de fruits à base de concentré',
-    "Jus d'orange",
-    "Jus d'orange à base de concentré",
-    'Jus de pamplemousse',
 ]
 
 COUNTRIES_LIST = ["France"]

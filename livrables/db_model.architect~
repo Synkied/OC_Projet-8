@@ -74,7 +74,7 @@
   <table id="TAB17" populated="true" UUID="0a0ab8a3-6a10-4cdd-a2b7-ab940b8509ba" name="ProductBrand" objectType="TABLE" physicalName="ProductBrand" >
    <remarks></remarks>
    <folder id="FOLTAB171" populated="true" name="Columns" physicalName="Columns" type="1">
-    <column id="COL18" populated="true" UUID="ecbb0079-20b0-4b32-8534-8223e80baec2" autoIncrement="false" autoIncrementSequenceName="ProductBrand_brand_brand_id_seq" defaultValue="" name="brand_i" nullable="0" physicalName="brand_id" precision="0" primaryKeySeq="0" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="4" userDefinedTypeUUID="63b011c7-c81f-4c75-8271-632b3c87f727" >
+    <column id="COL18" populated="true" UUID="ecbb0079-20b0-4b32-8534-8223e80baec2" autoIncrement="false" autoIncrementSequenceName="ProductBrand_brand_brand_id_seq" defaultValue="" name="brand_id" nullable="0" physicalName="brand_id" precision="0" primaryKeySeq="0" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="4" userDefinedTypeUUID="63b011c7-c81f-4c75-8271-632b3c87f727" >
      <remarks></remarks>
     </column>
     <column id="COL19" populated="true" UUID="b7927cf1-2b39-413f-a18b-6155df28d632" autoIncrement="false" autoIncrementSequenceName="ProductBrand_product_id_seq" defaultValue="" name="product_id" nullable="0" physicalName="product_id" precision="0" primaryKeySeq="1" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="4" userDefinedTypeUUID="63b011c7-c81f-4c75-8271-632b3c87f727" >
@@ -87,7 +87,7 @@
     </folder>
     <folder id="FOLTAB174" populated="true" name="Indices" physicalName="Indices" type="4">
     <index id="IDX20" populated="true" UUID="d007f6f2-775f-4807-8cc5-911579418380" clustered="false" name="ProductBrand_pk" physicalName="productbrand_pk" primaryKeyIndex="true" unique="false" >
-     <index-column id="IDC21" populated="true" UUID="b206b986-bb6f-4f2a-b418-7f6cf4e0e2c3" ascendingOrDescending="UNSPECIFIED" column-ref="COL18" name="brand_i" physicalName="brand_id" />
+     <index-column id="IDC21" populated="true" UUID="b206b986-bb6f-4f2a-b418-7f6cf4e0e2c3" ascendingOrDescending="UNSPECIFIED" column-ref="COL18" name="brand_id" physicalName="brand_id" />
      <index-column id="IDC22" populated="true" UUID="2adab6dc-b648-4810-a91f-129a1c302031" ascendingOrDescending="UNSPECIFIED" column-ref="COL19" name="product_id" physicalName="product_id" />
     </index>
    </folder>

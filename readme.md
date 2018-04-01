@@ -52,8 +52,26 @@ make init
 ```
 
 ## Creating and feeding db
+First, in a terminal, run :
 ```sh
-make create_db u={your postgresql username} n={the dbname you want to use}
+make create_db u={{ YOUR DB USERNAME }} n={{ YOUR DB NAME }}
+```
+
+In your Django `settings.py`
+```sh DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': '{{ YOUR DB NAME }}',
+        'USER': '{{ YOUR DB USERNAME }}',
+        'PASSWORD': '{{ YOUR DB PASSWORD OR EMPTY ('') }}', 
+        'HOST': 'YOUR DB HOST OR EMPTY ('')',
+        'PORT': '5432',
+    }
+}
+```
+
+Then run in a terminal :
+```sh
 make migrate_db
 make feed_db
 ```

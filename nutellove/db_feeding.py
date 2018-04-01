@@ -202,7 +202,7 @@ class DBFeed():
         # for each brand, get or create the productsbrands table
         # based on brand name and product name of each dict.
 
-        print("Feeding brands...")
+        print("Feeding productsbrands...")
         for dic in products_dict:
             if dic["brands"] is not None:
                 for brand in dic["brands"]:
@@ -222,7 +222,7 @@ class DBFeed():
                         )
                     )
 
-        print("Brands fed")
+        print("Productsbrands fed")
 
     def fill_productsstores(self, products_dict):
         # this loop gets all dicts in the products_dict list.
@@ -230,7 +230,7 @@ class DBFeed():
         # for each store, get or create the productsstores table
         # based on store name and product name of each dict.
 
-        print("Feeding stores...")
+        print("Feeding productsstores...")
         for dic in products_dict:
             if dic["stores"] is not None:
                 for store in dic["stores"]:
@@ -250,7 +250,7 @@ class DBFeed():
                         )
                     )
 
-        print("Stores fed")
+        print("Productsstores fed")
 
     def delete_productsstores(self, products_dict):
         for t in Stores.objects.select():
