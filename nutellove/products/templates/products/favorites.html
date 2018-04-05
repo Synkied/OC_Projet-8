@@ -21,16 +21,16 @@
         </div>
     
         
-          <ul class="nav nav-tabs">
-            {% for favorite in favorites %}
-              <li class="nav-item">
-                  <a class="nav-link" data-toggle="tab" href="#{{ favorite.substitute.cat.name }}"> {{ favorite.substitute.cat.name }} </a>
-              </li>
-            {% endfor %}
-          </ul>
-        
+<!--           <ul class="nav nav-tabs">
+  {% for favorite in favorites %}
+    <li class="nav-item">
+        <a class="nav-link" data-toggle="tab" href="#{{ favorite.substitute.cat.name }}"> {{ favorite.substitute.cat.name }} </a>
+    </li>
+  {% endfor %}
+</ul>
+         -->
 
-        <div class="well">
+        <div class="well mt-1">
           <div class="tab-content">
             
             <div role="tabpanel" class="tab-pane active" id="{{ favorite.substitute.cat.name }}">

@@ -31,7 +31,7 @@ HEADERS_LIST = [
 
 CATEGORIES_LIST = [
     # 'Petit-déjeuners',
-    # 'Chips et frites',
+    'Chips et frites',
     # 'Soupes',
     'Biscuits',
 ]

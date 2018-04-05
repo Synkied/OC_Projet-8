@@ -1,11 +1,9 @@
-from django.contrib import messages
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, update_session_auth_hash
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.forms import PasswordChangeForm
 from django.views.generic import View
 from nutellove.forms import UserForm
-from products.models import Brand, Category, Product, Favorite
 
 
 class UserFormView(View):
