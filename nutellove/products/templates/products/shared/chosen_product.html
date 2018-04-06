@@ -3,8 +3,9 @@
 {% load static %}
 
   <!-- display the chosen product -->
+  <div class="container-fluid">
     <div class="row">
-      <div class=" col-md-12 text-center mb-5 align-bottom">
+      <div class="col-md-12 text-center mb-5 align-bottom p-0">
         <a href="{% url 'products:product_detail' product_id=chosen_product.id %}">
 
             <div class="contain">
@@ -34,4 +35,5 @@
         </a>
       </div>
     </div>
+  </div>
     <!-- !!end display the chosen product -->

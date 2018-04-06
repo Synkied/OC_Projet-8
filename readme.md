@@ -38,6 +38,11 @@ source ~/.profile
 ```
 
 # Requirements
+## Installing Postgresql
+Go to https://www.postgresql.org/download/ and choose your OS.
+On MacOs you can install Homebrew (a packet manager): https://brew.sh/index
+and then in a terminal: ```brew install postegresql```
+
 ## Running the virtual environment
 After the virtual environment is setup, you can then work on it:
 ```sh
