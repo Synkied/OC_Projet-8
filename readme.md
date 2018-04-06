@@ -50,6 +50,11 @@ workon {your_env_name}
 ```
 
 ## Installing the dependencies
+First change your directory to be in the root django project folder (where manage.py is located): 
+```sh
+cd nutellove
+```
+
 ```sh
 pip install -r requirements.txt
 ```
