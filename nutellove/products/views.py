@@ -12,7 +12,7 @@ from django.views import View
 # Create your views here.
 
 
-def listing(request):
+def listing(request):  # pragma: no cover
     """
     List all available products on a page
     """
@@ -112,6 +112,11 @@ class BrandCategoryDetail(View):  # pragma: no cover
 
 
 class Search(View):
+    """
+    Handles the search of products in the app.
+    Also contains the algorithm that show better products compared to
+    the queried product.
+    """
 
     template_name = 'products/search.html'
 
@@ -169,7 +174,7 @@ class Search(View):
             title = ""
 
         # check if user is not anonymous
-        if user.username != "":
+        if user.username != "":  # pragma: no cover
             for product in products:
                 if Favorite.objects.filter(substitute=product, user=user).exists():
                     product.is_favorite = True
@@ -187,15 +192,25 @@ class Search(View):
 
 
 class FavoriteView(LoginRequiredMixin, View):
+    """
+    Handles two things:
+    - get: The showing of a user's favorites
+    - post: The add/remove products to favorites, via a specific url (bookmark)
+    """
+
     # pass the model in path args in urls.py
     # e.g: FavoriteView.as_view(model=Favorite)
+
     model = None
     template_name = 'products/favorites.html'
 
     def get(self, request, product_id=None):
+        """
+        Get all the favorites of a user
+        """
 
         user = auth.get_user(request)
-        favorites = Favorite.objects.filter(user=user)
+        favorites = self.model.objects.filter(user=user)
 
         context = {
             'favorites': favorites
@@ -205,12 +220,15 @@ class FavoriteView(LoginRequiredMixin, View):
         next_url = request.GET.get('next')
 
         # redirect to next url
-        if next_url:
+        if next_url:  # pragma: no cover
             return HttpResponseRedirect(next_url)
         else:
             return render(request, self.template_name, context)
 
     def post(self, request, product_id):
+        """
+        Adds or remove a product to the connected user's favorites
+        """
 
         # Get the user if connected
         user = auth.get_user(request)

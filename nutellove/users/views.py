@@ -11,7 +11,7 @@ class UserFormView(View):
     template_name = 'registration_form.html'
 
     # display blank form
-    def get(self, request):
+    def get(self, request):  # pragma: no cover
         # initiate a form without data (None)
         form = self.form_class(None)
         context = {
@@ -47,7 +47,7 @@ class UserFormView(View):
                     return redirect('index')
 
         # else: try again
-        return render(request, self.template_name, context)
+        return render(request, self.template_name, context)  # paragm: no cover
 
 
 class UserAccountView(LoginRequiredMixin, View):
