@@ -1,8 +1,10 @@
 # Nutell'ove
 
-# Features
+## Features
+This app lets a user search for a product and suggests similar healthier products.
+The user can then favorite the suggested products (or not) after creating registering to the app or logging in.
 
-# Installation
+## Installation
 
 ### Python 3
 
@@ -76,6 +78,26 @@ make migrate_db
 make feed_db
 ```
 
-# Running the app
+## Adding/updating data fetched from OpenFoodFacts
+### Updating the constants
+You can change the constants used in ```constants.py```.
+You can see all the data-fields available at: https://world.openfoodfacts.org/data/data-fields.txt
+You can also add categories of products fetched. To know the list of all categories available on OpenFoodFacts, you can go at: https://fr.openfoodfacts.org/categories or https://world.openfoodfacts.org/categories (slow to load).
 
-# Known issues
+### Updating the db_file.csv
+After you have updated the ```constants.py``` file, you need to download the CSV file at: https://fr.openfoodfacts.org/data/fr.openfoodfacts.org.products.csv.
+When it is downloaded, move it to the project folder and run ```csv_cleaner.py``` (might take some time depending on the constants you passed).
+
+Then run in a terminal :
+```sh
+make feed_db
+```
+
+You should be all set.
+
+# Running the app
+To run the app :
+```sh
+python manage.py runserver
+```
+Then go to localhost:8000 or 127.0.0.1:8000, and the app should be launched and usable there.
