@@ -51,7 +51,7 @@ class ProductDetail(View):
         return render(request, self.template_name, context)
 
 
-class BrandCategoryDetail(View):
+class BrandCategoryDetail(View):  # pragma: no cover
     """
     Abstract class to display categories and details
     """
