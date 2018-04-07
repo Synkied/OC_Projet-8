@@ -26,17 +26,7 @@
         <div class="row text-center">
           <div class="col-xl-6 col-lg-6 col-md-4 col-xs-1 mx-auto">
             <p><span class="title-cat">{% blocktrans %} Catégorie : {% endblocktrans %}</span> <a href="{% url 'products:category_detail' obj_id=category.id %}">{{ category.name }}</a></p>
-              {% if product.nutri_grade == "a" %}
-                <p>Nutriscore : <span class="badge badge-success">{{ product.nutri_grade }}</span></p>
-              {% elif product.nutri_grade == "b" %}
-                <p>Nutriscore : <span class="badge badge-info">{{ product.nutri_grade }}</span></p>
-              {% elif product.nutri_grade == "c" %}
-                <p>Nutriscore : <span class="badge badge-primary">{{ product.nutri_grade }}</span></p>
-              {% elif product.nutri_grade == "d" %}
-                <p>Nutriscore : <span class="badge badge-warning">{{ product.nutri_grade }}</span></p>
-              {% elif product.nutri_grade == "e" %}
-                <p>Nutriscore : <span class="badge badge-danger">{{ product.nutri_grade }}</span></p>
-              {% endif %}
+                <img src="https://static.openfoodfacts.org/images/misc/nutriscore-{{ product.nutri_grade }}.svg" alt="">
             <table class="table">
               <caption>
                 <span class="title-cat">{% blocktrans %} Valeurs nutritionelles (pour 100 g) {% endblocktrans %}</span>

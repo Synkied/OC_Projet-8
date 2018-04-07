@@ -42,17 +42,16 @@
                   <div class="col-xl-3 col-lg-4 col-md-4 col-xs-1 text-center border">
 
                     {% if favorite.substitute.nutri_grade == "a" %}
-                      <div class="nutri-grade"><span class="badge badge-success">{{ favorite.substitute.nutri_grade }}</span></div>
+                      <div class="nutri-grade"><span class="badge nutri-a text-white">{{ favorite.substitute.nutri_grade.upper }}</span></div>
                     {% elif favorite.substitute.nutri_grade == "b" %}
-                      <div class="nutri-grade"><span class="badge badge-info">{{ favorite.substitute.nutri_grade }}</span></div>
+                      <div class="nutri-grade"><span class="badge nutri-b text-white">{{ favorite.substitute.nutri_grade.upper }}</span></div>
                     {% elif favorite.substitute.nutri_grade == "c" %}
-                      <div class="nutri-grade"><span class="badge badge-primary">{{ favorite.substitute.nutri_grade }}</span></div>
+                      <div class="nutri-grade"><span class="badge nutri-c text-dark">{{ favorite.substitute.nutri_grade.upper }}</span></div>
                     {% elif favorite.substitute.nutri_grade == "d" %}
-                      <div class="nutri-grade"><span class="badge badge-warning">{{ favorite.substitute.nutri_grade }}</span></div>
+                      <div class="nutri-grade"><span class="badge nutri-d text-white">{{ favorite.substitute.nutri_grade.upper }}</span></div>
                     {% elif favorite.substitute.nutri_grade == "e" %}
-                      <div class="nutri-grade"><span class="badge badge-danger">{{ favorite.substitute.nutri_grade }}</span></div>
+                      <div class="nutri-grade"><span class="badge nutri-e text-white">{{ favorite.substitute.nutri_grade.upper }}</span></div>
                     {% endif %}
-
                     <div class="container vbottom p-3">
                       <a href="{% url 'products:product_detail' product_id=favorite.substitute.id %}">
                         {% if favorite.substitute.img_small is none %}

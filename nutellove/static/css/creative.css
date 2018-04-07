@@ -109,6 +109,32 @@ img::-moz-selection {
   transform: translateY(-100%);
 }
 
+.nutri-a {
+  font-family: sans-serif;
+  background-color: #028141;
+}
+
+.nutri-b {
+  font-family: sans-serif;
+  background-color: #85bb2e;
+}
+
+.nutri-c {
+  font-family: sans-serif;
+  background-color: #fecb01;
+}
+
+.nutri-d {
+  font-family: sans-serif;
+  background-color: #ee8100;
+}
+
+.nutri-e {
+  font-family: sans-serif;
+  background-color: #e63d10;
+}
+
+
 
 /************ NAV ************/
 

@@ -18,15 +18,15 @@
       <div class="col-xl-4 col-lg-6 col-md-6 col-xs-1 text-center border product-block">
       
       {% if product.nutri_grade == "a" %}
-        <div class="nutri-grade"><span class="badge badge-success">{{ product.nutri_grade }}</span></div>
+        <div class="nutri-grade"><span class="badge nutri-a text-white">{{ product.nutri_grade.upper }}</span></div>
       {% elif product.nutri_grade == "b" %}
-        <div class="nutri-grade"><span class="badge badge-info">{{ product.nutri_grade }}</span></div>
+        <div class="nutri-grade"><span class="badge nutri-b text-white">{{ product.nutri_grade.upper }}</span></div>
       {% elif product.nutri_grade == "c" %}
-        <div class="nutri-grade"><span class="badge badge-primary">{{ product.nutri_grade }}</span></div>
+        <div class="nutri-grade"><span class="badge nutri-c text-dark">{{ product.nutri_grade.upper }}</span></div>
       {% elif product.nutri_grade == "d" %}
-        <div class="nutri-grade"><span class="badge badge-warning">{{ product.nutri_grade }}</span></div>
+        <div class="nutri-grade"><span class="badge nutri-d text-white">{{ product.nutri_grade.upper }}</span></div>
       {% elif product.nutri_grade == "e" %}
-        <div class="nutri-grade"><span class="badge badge-danger">{{ product.nutri_grade }}</span></div>
+        <div class="nutri-grade"><span class="badge nutri-e text-white">{{ product.nutri_grade.upper }}</span></div>
       {% endif %}
 
         <div class="container vbottom p-3">
