@@ -25,11 +25,10 @@
       
       <div class="container">
         <div class="row text-center">
-          <div class="col-xl-6 col-lg-6 col-md-12 col-xs-1 mx-auto">
+          <div class="col-xl-8 col-lg-8 col-md-12 col-xs-1 mx-auto">
             <p><span class="title-cat">{% blocktrans %} Catégorie : {% endblocktrans %}</span> <a href="{% url 'products:category_detail' obj_id=category.id %}">{{ category.name }}</a></p>
                 <img src="https://static.openfoodfacts.org/images/misc/nutriscore-{{ product.nutri_grade }}.svg" alt="">
-            <div class="rtable">
-              <table class="table">
+              <table class="rtable">
                 <caption>
                   <span class="title-cat">{% blocktrans %} Valeurs nutritionelles (pour 100 g) {% endblocktrans %}</span>
                 </caption>
@@ -54,7 +53,6 @@
                   </tr>
                 </tbody>
               </table>
-            </div>
             <a class="btn btn-primary text-white mt-2" href="{{ product.url }}">Voir la fiche OpenFoodFacts</a>
           </div>
         </div>

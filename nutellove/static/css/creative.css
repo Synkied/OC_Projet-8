@@ -5,7 +5,7 @@ html {
 }
 
 body {
-  font-family: 'Scope One', 'Helvetica Neue', Arial, sans-serif;
+  font-family: 'Open Sans', sans-serif;
 }
 
 hr {
@@ -562,7 +562,7 @@ label {
   padding: 3% 0;
 }
 
-.section-pad-not-found{
+.section-pad-px{
   padding: 100px 0;
 }
 
@@ -578,16 +578,13 @@ label {
   
   overflow-x: auto;
   
-  // optional - looks better for small cell values
   white-space: nowrap;
 
   border-collapse: collapse;
   border-spacing: 0;
 
-  // optional - enable iOS momentum scrolling
   -webkit-overflow-scrolling: touch;
   
-  // scrolling shadows
   background: radial-gradient(left, ellipse, rgba(0,0,0, .2) 0%, rgba(0,0,0, 0) 75%) 0 center,
               radial-gradient(right, ellipse, rgba(0,0,0, .2) 0%, rgba(0,0,0, 0) 75%) 100% center;
   background-size: 10px 100%, 10px 100%;
@@ -601,7 +598,6 @@ label {
   background-size: 20px 100%;
 }
 
-// gradient on the last cells to hide the right shadow
 .rtable td:last-child {
   background-image: linear-gradient(to left, rgba(255,255,255, 1) 50%, rgba(255,255,255, 0) 100%);
   background-repeat: no-repeat;
