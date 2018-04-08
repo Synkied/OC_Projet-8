@@ -19,6 +19,8 @@
                 <h1 class="text-uppercase favorite-msg"><span class="favorite-msg-txt">{% blocktrans %}Vos favoris{% endblocktrans %}</span></h1>
               </div>
         </div>
+    </div>
+  </div>
     
         
 <!--           <ul class="nav nav-tabs">
@@ -39,7 +41,7 @@
                 <div class="row">
                 
                 {% for favorite in favorites %}
-                  <div class="col-xl-4 col-lg-6 col-md-6 col-xs-1 text-center border">
+                  <div class="col-xl-4 col-lg-6 col-md-6 col-xs-1 p-0 text-center border">
 
                     {% if favorite.substitute.nutri_grade == "a" %}
                       <div class="nutri-grade"><span class="badge nutri-a text-white">{{ favorite.substitute.nutri_grade.upper }}</span></div>

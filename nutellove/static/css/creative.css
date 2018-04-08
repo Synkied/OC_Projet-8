@@ -513,6 +513,14 @@ label {
     left: 0;
     right: 0;
   }
+
+  h4 {
+    font-size: 1.2rem;
+  }
+
+  .nutri-grade {
+    font-size: 2.2rem;
+  }
 }
 
 
