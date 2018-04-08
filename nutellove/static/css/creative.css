@@ -504,6 +504,18 @@ label {
   left: 0;
   right: 0;
 }
+
+
+@media (max-width: 520px) {
+  .favorite-msg-box {
+    position: absolute;
+    top: 50px;
+    left: 0;
+    right: 0;
+  }
+}
+
+
 .account-msg, .favorite-msg {
   font-size: 4rem;
   font-weight: bold;
