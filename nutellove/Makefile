@@ -10,3 +10,9 @@ migrate_db:
 
 feed_db:
 	python db_feeding.py
+
+cover_test:
+	coverage run manage.py test
+
+cov_report:
+	coverage report
